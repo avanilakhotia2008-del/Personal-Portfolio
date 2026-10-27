@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brain Rot Cookbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Caveat:wght@500;700&family=Karla:wght@400;500;700&display=swap">
+<style>
+/* Layout: gingham tablecloth header, a scroll-snap strip of recipe cards, then the real recipe with a sticky-note brain rot version underneath. */
+:root {
+  --bg: #F4F8FB;
+  --ink: #1C2733;
+  --muted: #566676;
+  --card: #FFFFFF;
+  --line: #D5E0E9;
+  --gingham: rgba(66, 120, 170, 0.22);
+  --tomato: #C93C2E;
+  --tomato-ink: #FFFFFF;
+  --butter: #F5D75A;
+  --note-bg: #FBE27A;
+  --note-ink: #2A2410;
+  --bread: #E8BF82;
+  --crust: #B9803F;
+  --egg: #F7D44C;
+  --pan: #3A4652;
+  --focus: #1E6BB8;
+  --f-display: 'Bagel Fat One', 'Arial Rounded MT Bold', 'Trebuchet MS', system-ui, sans-serif;
+  --f-body: 'Karla', 'Segoe UI', system-ui, sans-serif;
+  --f-hand: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11181F; --ink: #E9EFF4; --muted: #9AAABA; --card: #1A242E; --line: #2B3947;
+    --gingham: rgba(111, 163, 207, 0.18); --tomato: #F0705F; --tomato-ink: #1A0B09;
+    --butter: #E9CA4F; --note-bg: #F0D35E; --note-ink: #2A2410;
+    --bread: #D9A867; --crust: #A66C2B; --egg: #F2CE45; --pan: #55636F; --focus: #7DB8EE;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11181F; --ink: #E9EFF4; --muted: #9AAABA; --card: #1A242E; --line: #2B3947;
+  --gingham: rgba(111, 163, 207, 0.18); --tomato: #F0705F; --tomato-ink: #1A0B09;
+  --butter: #E9CA4F; --note-bg: #F0D35E; --note-ink: #2A2410;
+  --bread: #D9A867; --crust: #A66C2B; --egg: #F2CE45; --pan: #55636F; --focus: #7DB8EE;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.wrap {
+  max-width: 62rem;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3, p, ul, ol { margin: 0; }
+h1, h2, h3 { text-wrap: balance; font-weight: 400; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+/* Header: gingham tablecloth with a label card on it */
+.top {
+  background-color: var(--bg);
+  background-image:
+    repeating-linear-gradient(0deg, var(--gingham) 0 14px, transparent 14px 28px),
+    repeating-linear-gradient(90deg, var(--gingham) 0 14px, transparent 14px 28px);
+  border-bottom: 1px solid var(--line);
+}
+.top .wrap { padding-block: 40px; }
+.label {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 22px 26px 24px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+}
+.eyebrow {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+h1 {
+  font-family: var(--f-display);
+  font-size: clamp(2.2rem, 7vw, 3.6rem);
+  line-height: 1.05;
+  color: var(--tomato);
+}
+.sub { max-width: 34rem; color: var(--ink); }
+
+/* Catalog */
+.catalog { padding-block: 36px 8px; }
+.row-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+h2.section {
+  font-family: var(--f-display);
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+.hint { color: var(--muted); font-size: 0.92rem; }
+.arrows { display: flex; gap: 8px; flex: none; }
+.arrow {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+.arrow:hover:not(:disabled) { border-color: var(--tomato); color: var(--tomato); }
+.arrow:disabled { opacity: 0.35; cursor: default; }
+
+.strip {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 10px 6px 18px;
+  margin-inline: -6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.pick {
+  flex: none;
+  width: 13.5rem;
+  scroll-snap-align: start;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pick:hover { transform: translateY(-3px); box-shadow: 0 8px 0 rgba(0, 0, 0, 0.06); }
+.pick[aria-pressed="true"] {
+  outline: 3px solid var(--tomato);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+.disc {
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  background: var(--butter);
+  display: grid; place-items: center;
+}
+.disc svg { width: 52px; height: 52px; display: block; }
+.pick .name { font-family: var(--f-display); font-size: 1.3rem; line-height: 1.1; }
+.pick .rotname { font-family: var(--f-hand); font-weight: 700; font-size: 1.3rem; line-height: 1; color: var(--tomato); }
+.pick .meta { font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Detail */
+.detail { padding-block: 20px 56px; }
+.dhead { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+.dhead h2 {
+  font-family: var(--f-display);
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  line-height: 1.05;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  font-variant-numeric: tabular-nums;
+}
+.tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.real {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+  gap: 28px;
+}
+.real h3, .rot h3 {
+  font-family: var(--f-display);
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+.ing { list-style: none; padding: 0; display: grid; gap: 8px; }
+.ing li {
+  display: grid;
+  grid-template-columns: 5.8rem minmax(0, 1fr);
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--line);
+}
+.ing .q { font-weight: 700; font-variant-numeric: tabular-nums; }
+.steps { list-style: none; padding: 0; display: grid; gap: 14px; counter-reset: s; }
+.steps li {
+  counter-increment: s;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  max-width: 42rem;
+}
+.steps li::before {
+  content: counter(s);
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  background: var(--tomato);
+  color: var(--tomato-ink);
+  font-weight: 700;
+  display: grid; place-items: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.rot-wrap { margin-top: 28px; }
+.rot {
+  background: var(--note-bg);
+  color: var(--note-ink);
+  border-radius: 4px;
+  padding: 26px 26px 30px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+  transform: rotate(-0.4deg);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+  gap: 24px 28px;
+}
+.rot .rot-title { grid-column: 1 / -1; }
+.rot .rot-title .tagline {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.rot .rot-title h3 {
+  font-family: var(--f-hand);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 6vw, 3rem);
+  line-height: 1;
+  margin: 4px 0 0;
+}
+.rot h3.sm { font-family: var(--f-hand); font-weight: 700; font-size: 1.7rem; margin-bottom: 6px; }
+.rot .ing li { border-bottom-color: rgba(42, 36, 16, 0.3); font-family: var(--f-hand); font-weight: 500; font-size: 1.4rem; line-height: 1.15; }
+.rot .ing .q { font-weight: 700; }
+.rot .steps li { font-family: var(--f-hand); font-weight: 500; font-size: 1.4rem; line-height: 1.2; max-width: 40rem; }
+.rot .steps li::before {
+  background: transparent;
+  border: 2px solid var(--note-ink);
+  color: var(--note-ink);
+  font-family: var(--f-body);
+  font-size: 0.95rem;
+}
+.rot b { font-weight: 700; }
+
+.foot { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.88rem; }
+.foot .wrap { padding-block: 18px; }
+
+@media (max-width: 720px) {
+  .real, .rot { grid-template-columns: minmax(0, 1fr); }
+  .real { padding: 18px; gap: 22px; }
+  .rot { padding: 22px 18px 26px; }
+  .top .wrap { padding-block: 28px; }
+  .label { padding: 18px; }
+  .arrows { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pick { transition: none; }
+  .pick:hover { transform: none; }
+}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="label">
+      <span class="eyebrow">Recipe book · 5 pages</span>
+      <h1>Brain Rot Cookbook</h1>
+      <p class="sub">Pick a page. You get the real recipe first, then the same recipe in brain rot underneath.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="catalog wrap" aria-labelledby="cat-h">
+    <div class="row-head">
+      <div>
+        <h2 class="section" id="cat-h">The catalog</h2>
+        <p class="hint">Scroll sideways, then tap a recipe.</p>
+      </div>
+      <div class="arrows">
+        <button class="arrow" id="prev" type="button" aria-label="Scroll catalog left">&larr;</button>
+        <button class="arrow" id="next" type="button" aria-label="Scroll catalog right">&rarr;</button>
+      </div>
+    </div>
+    <div class="strip" id="strip" role="list"></div>
+  </section>
+
+  <section class="detail wrap" id="detail" aria-live="polite"></section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">Times are for a regular home stove. Waffle irons vary, so follow yours.</div>
+</footer>
+
+<script>
+(function () {
+  var ICONS = {
+    'grilled-cheese': '<svg viewBox="0 0 64 64" aria-hidden="true"><polygon points="6,6 6,48 48,6" fill="var(--bread)" stroke="var(--crust)" stroke-width="3" stroke-linejoin="round"/><polygon points="13,14 13,34 33,14" fill="var(--egg)"/><polygon points="58,16 58,58 16,58" fill="var(--bread)" stroke="var(--crust)" stroke-width="3" stroke-linejoin="round"/><polygon points="51,30 51,51 30,51" fill="var(--egg)"/></svg>',
+    'pancakes': '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="40" width="48" height="13" rx="6.5" fill="var(--bread)" stroke="var(--crust)" stroke-width="3"/><rect x="8" y="29" width="48" height="13" rx="6.5" fill="var(--bread)" stroke="var(--crust)" stroke-width="3"/><rect x="8" y="18" width="48" height="13" rx="6.5" fill="var(--bread)" stroke="var(--crust)" stroke-width="3"/><rect x="26" y="9" width="13" height="9" rx="2" fill="var(--butter)" stroke="var(--crust)" stroke-width="2"/><path d="M14 26 q5 11 10 0 q5 14 10 0" fill="none" stroke="var(--crust)" stroke-width="3" stroke-linecap="round"/></svg>',
+    'waffles': '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="8" width="48" height="48" rx="8" fill="var(--bread)" stroke="var(--crust)" stroke-width="3"/><path d="M24 8V56M40 8V56M8 24H56M8 40H56" stroke="var(--crust)" stroke-width="2.5"/><rect x="26" y="26" width="12" height="12" rx="2" fill="var(--butter)" stroke="var(--crust)" stroke-width="2"/></svg>',
+    'french-toast': '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="9" y="9" width="46" height="46" rx="11" fill="var(--bread)" stroke="var(--crust)" stroke-width="3"/><rect x="16" y="16" width="32" height="32" rx="7" fill="var(--crust)" opacity="0.35"/><circle cx="25" cy="26" r="2.2" fill="var(--crust)"/><circle cx="36" cy="24" r="2.2" fill="var(--crust)"/><circle cx="30" cy="35" r="2.2" fill="var(--crust)"/><circle cx="42" cy="39" r="6" fill="var(--tomato)"/></svg>',
+    'scrambled-eggs': '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="30" cy="35" r="23" fill="var(--pan)"/><rect x="49" y="31" width="14" height="8" rx="4" fill="var(--pan)"/><path d="M15 35 q-2 -11 9 -13 q7 -7 15 0 q11 2 6 13 q2 11 -10 11 q-8 4 -15 -2 q-8 -2 -5 -9 z" fill="var(--egg)"/></svg>'
+  };
+
+  var R = [
+    {
+      id: 'grilled-cheese', name: 'Grilled Cheese', rot: 'Skibidi Grilled Cheese',
+      time: '10 min', level: 'Easy', yields: 'Makes 1 sandwich',
+      ing: [['2 slices', 'sandwich bread'], ['1 tbsp', 'butter, softened'], ['2 slices', 'cheddar cheese (about 2 oz)']],
+      steps: [
+        'Spread butter on one side of each slice of bread.',
+        'Heat a skillet over medium-low heat.',
+        'Place one slice butter-side down in the skillet, lay the cheese on top, then cover with the second slice, butter-side up.',
+        'Cook 3 to 4 minutes, until the bottom is golden brown.',
+        'Flip and cook 2 to 3 minutes more, until the cheese is melted. Rest 1 minute, then slice.'
+      ],
+      rIng: [['2 slices', 'bread, the NPC buns'], ['1 tbsp', 'butter, pure aura'], ['2 slices', 'cheddar, sigma cheese (about 2 oz)']],
+      rSteps: [
+        '<b>Butter one side of each slice.</b> Rizz them up. Butter is aura and the bread has none yet.',
+        '<b>Heat the skillet on medium-low.</b> Max heat is a L take. You will get cooked, and not in the good way.',
+        '<b>Bread butter-side down, cheese on top, second slice butter-side up.</b> That is one sandwich mogging every other sandwich.',
+        '<b>Cook 3 to 4 minutes until the bottom is golden.</b> Lock in. No peeking every two seconds like a scrolling NPC.',
+        '<b>Flip, cook 2 to 3 more minutes until the cheese is melted.</b> Rest 1 minute, then slice. That crunch is goated.'
+      ]
+    },
+    {
+      id: 'pancakes', name: 'Pancakes', rot: 'Sigma Pancakes',
+      time: '20 min', level: 'Easy', yields: 'Makes about 8 pancakes',
+      ing: [['1 1/2 cups', 'all-purpose flour'], ['1 tbsp', 'sugar'], ['1 tbsp', 'baking powder'], ['1/2 tsp', 'salt'], ['1 1/4 cups', 'milk'], ['1', 'egg'], ['3 tbsp', 'butter, melted']],
+      steps: [
+        'Whisk the flour, sugar, baking powder and salt in a large bowl.',
+        'In another bowl, whisk the milk, egg and melted butter.',
+        'Pour the wet mix into the dry mix and stir until just combined. A few lumps are fine. Let the batter rest 5 minutes.',
+        'Heat a griddle or nonstick pan over medium heat and lightly grease it.',
+        'Scoop 1/4 cup of batter per pancake. Cook 2 to 3 minutes, until bubbles form on top and the edges look set.',
+        'Flip and cook 1 to 2 minutes more, until golden brown. Serve warm.'
+      ],
+      rIng: [['1 1/2 cups', 'flour, base NPC energy'], ['1 tbsp', 'sugar, delulu sweetness'], ['1 tbsp', 'baking powder, the glow-up'], ['1/2 tsp', 'salt, no cap'], ['1 1/4 cups', 'milk, the sauce'], ['1', 'egg, the glue'], ['3 tbsp', 'butter, melted, more aura']],
+      rSteps: [
+        '<b>Whisk the flour, sugar, baking powder and salt in a big bowl.</b> The dry squad assembles.',
+        '<b>Whisk milk, egg and melted butter in a second bowl.</b> The wet squad has entered the chat.',
+        '<b>Pour wet into dry and stir until just combined.</b> Lumps are fine. Overmixing is a skill issue. Let it rest 5 minutes while the batter touches grass.',
+        '<b>Heat a pan on medium and lightly grease it.</b> Medium heat is the sigma grindset.',
+        '<b>Scoop 1/4 cup per pancake. Cook 2 to 3 minutes until bubbles pop and the edges look set.</b> Bubbles mean it is ready, no cap.',
+        '<b>Flip, cook 1 to 2 more minutes until golden.</b> Serve warm. Stack them tall for maximum rizz.'
+      ]
+    },
+    {
+      id: 'waffles', name: 'Waffles', rot: 'Waffles (Only in Ohio)',
+      time: '25 min', level: 'Easy', yields: 'Makes about 6 waffles',
+      ing: [['2 cups', 'all-purpose flour'], ['2 tbsp', 'sugar'], ['1 tbsp', 'baking powder'], ['1/2 tsp', 'salt'], ['1 3/4 cups', 'milk'], ['2', 'eggs'], ['1/2 cup', 'butter, melted'], ['1 tsp', 'vanilla extract']],
+      steps: [
+        'Preheat the waffle iron. To serve everyone at once, heat the oven to 200°F to keep finished waffles warm.',
+        'Whisk the flour, sugar, baking powder and salt in a large bowl.',
+        'In another bowl, whisk the milk, eggs, melted butter and vanilla.',
+        'Pour the wet mix into the dry mix and stir until just combined. Lumpy batter is fine.',
+        'Pour batter onto the hot iron (use the amount your iron calls for), close it, and cook 3 to 5 minutes, until golden and the steam slows down.',
+        'Move the waffle to a rack or the warm oven. Repeat with the rest of the batter.'
+      ],
+      rIng: [['2 cups', 'flour, the skibidi base'], ['2 tbsp', 'sugar, rizz'], ['1 tbsp', 'baking powder, glow-up fuel'], ['1/2 tsp', 'salt, no cap'], ['1 3/4 cups', 'milk'], ['2', 'eggs, double glue'], ['1/2 cup', 'butter, melted, big aura'], ['1 tsp', 'vanilla, smells like a W']],
+      rSteps: [
+        '<b>Preheat the waffle iron. Heat the oven to 200°F</b> if you want every waffle ready at once. The iron has to be locked in before you are.',
+        '<b>Whisk flour, sugar, baking powder and salt.</b> Dry squad, assemble.',
+        '<b>Whisk milk, eggs, melted butter and vanilla in another bowl.</b> The wet squad joins the lobby.',
+        '<b>Pour wet into dry, stir until just combined.</b> Lumpy is fine. Perfect batter is an NPC mindset.',
+        '<b>Pour batter on the hot iron (use the amount your iron says), close it, cook 3 to 5 minutes until golden and the steam slows.</b> Do not open it early. Patience is gigachad behavior.',
+        '<b>Move the waffle to a rack or the warm oven. Repeat.</b> A full stack is Ohio-level goated.'
+      ]
+    },
+    {
+      id: 'french-toast', name: 'French Toast', rot: 'Fanum Tax French Toast',
+      time: '15 min', level: 'Easy', yields: 'Serves 2',
+      ing: [['4 slices', 'thick bread, day-old works best'], ['2', 'eggs'], ['1/2 cup', 'milk'], ['1 tsp', 'cinnamon'], ['1 tsp', 'vanilla extract'], ['1 tbsp', 'butter, plus more for the pan as needed']],
+      steps: [
+        'Whisk the eggs, milk, cinnamon and vanilla in a shallow dish.',
+        'Melt the butter in a skillet over medium heat.',
+        'Soak each slice of bread about 15 seconds per side, until it soaks up the egg mixture but is not falling apart.',
+        'Cook 2 to 3 minutes per side, until golden brown.',
+        'Serve warm with syrup or fruit.'
+      ],
+      rIng: [['4 slices', 'thick bread, day-old is the sigma pick'], ['2', 'eggs'], ['1/2 cup', 'milk'], ['1 tsp', 'cinnamon, spicy aura'], ['1 tsp', 'vanilla'], ['1 tbsp', 'butter, more if the pan gets thirsty']],
+      rSteps: [
+        '<b>Whisk eggs, milk, cinnamon and vanilla in a shallow dish.</b> This is the lobby for the bread.',
+        '<b>Melt the butter in a skillet on medium.</b> Aura loading.',
+        '<b>Soak each slice about 15 seconds per side.</b> It should drink the egg mix but not collapse. Soggy bread is cooked, in the bad way.',
+        '<b>Cook 2 to 3 minutes per side until golden.</b> Lock in. Flip once. You are not a spinning NPC.',
+        '<b>Serve warm with syrup or fruit.</b> Someone will fanum tax a bite off your plate. Accept it.'
+      ]
+    },
+    {
+      id: 'scrambled-eggs', name: 'Scrambled Eggs', rot: 'Mewing Scrambled Eggs',
+      time: '8 min', level: 'Easy', yields: 'Serves 1',
+      ing: [['3', 'eggs'], ['1 tbsp', 'milk (optional)'], ['1 tbsp', 'butter'], ['1 pinch', 'salt']],
+      steps: [
+        'Crack the eggs into a bowl, add the milk and a pinch of salt, and whisk until fully mixed with no streaks of white.',
+        'Melt the butter in a nonstick skillet over medium-low heat.',
+        'Pour in the eggs and let them sit about 20 seconds, until the edges start to set.',
+        'Push the eggs slowly across the pan with a spatula to form soft curds. Keep going for 2 to 3 minutes.',
+        'Take the pan off the heat while the eggs still look a little glossy. They finish cooking on their own. Serve right away.'
+      ],
+      rIng: [['3', 'eggs, the whole squad'], ['1 tbsp', 'milk, optional'], ['1 tbsp', 'butter, aura'], ['1 pinch', 'salt, no cap']],
+      rSteps: [
+        '<b>Crack eggs in a bowl, add milk and salt, whisk until no white streaks.</b> Mix like you are mewing: smooth jawline, smooth eggs.',
+        '<b>Melt the butter in a nonstick skillet on medium-low.</b> Low and slow is the sigma way.',
+        '<b>Pour in the eggs and wait about 20 seconds</b> until the edges start to set. Do not touch them. Impulse control is aura.',
+        '<b>Push the eggs across the pan with a spatula for 2 to 3 minutes</b> to make soft curds. Stay calm. Panic is NPC behavior.',
+        '<b>Pull the pan off the heat while the eggs still look a bit glossy.</b> They keep cooking on their own. Serve right away. Overcooked eggs are cooked, and cooked is a L.'
+      ]
+    }
+  ];
+
+  var strip = document.getElementById('strip');
+  var detail = document.getElementById('detail');
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var behavior = reduce ? 'auto' : 'smooth';
+
+  function ingList(items) {
+    return '<ul class="ing">' + items.map(function (i) {
+      return '<li><span class="q">' + i[0] + '</span><span>' + i[1] + '</span></li>';
+    }).join('') + '</ul>';
+  }
+  function stepList(items) {
+    return '<ol class="steps">' + items.map(function (s) { return '<li><span>' + s + '</span></li>'; }).join('') + '</ol>';
+  }
+
+  strip.innerHTML = R.map(function (r) {
+    return '<button class="pick" type="button" role="listitem" data-id="' + r.id + '" aria-pressed="false">' +
+      '<span class="disc">' + ICONS[r.id] + '</span>' +
+      '<span class="name">' + r.name + '</span>' +
+      '<span class="rotname">' + r.rot + '</span>' +
+      '<span class="meta">' + r.time + ' · ' + r.level + '</span>' +
+      '</button>';
+  }).join('');
+
+  function select(id, centerCard) {
+    var r = R.filter(function (x) { return x.id === id; })[0] || R[0];
+    Array.prototype.forEach.call(strip.children, function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-id') === r.id ? 'true' : 'false');
+    });
+    detail.innerHTML =
+      '<div class="dhead">' +
+        '<h2>' + r.name + '</h2>' +
+        '<div class="chips"><span class="chip">' + r.time + '</span><span class="chip">' + r.level + '</span><span class="chip">' + r.yields + '</span></div>' +
+      '</div>' +
+      '<p class="tag">The real recipe</p>' +
+      '<div class="real">' +
+        '<div><h3>Ingredients</h3>' + ingList(r.ing) + '</div>' +
+        '<div><h3>Steps</h3>' + stepList(r.steps) + '</div>' +
+      '</div>' +
+      '<div class="rot-wrap">' +
+        '<p class="tag">Now in brain rot</p>' +
+        '<div class="rot">' +
+          '<div class="rot-title"><span class="tagline">Same recipe, rotted</span><h3>' + r.rot + '</h3></div>' +
+          '<div><h3 class="sm">Ingredients</h3>' + ingList(r.rIng) + '</div>' +
+          '<div><h3 class="sm">Steps</h3>' + stepList(r.rSteps) + '</div>' +
+        '</div>' +
+      '</div>';
+    if (centerCard) {
+      var card = strip.querySelector('[data-id="' + r.id + '"]');
+      if (card) {
+        var left = card.offsetLeft - (strip.clientWidth - card.offsetWidth) / 2;
+        strip.scrollTo({ left: Math.max(0, left), behavior: behavior });
+      }
+    }
+  }
+
+  strip.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.pick') : null;
+    if (b) select(b.getAttribute('data-id'), false);
+  });
+
+  function step(dir) {
+    var card = strip.querySelector('.pick');
+    var w = card ? card.offsetWidth + 14 : 220;
+    strip.scrollBy({ left: dir * w * 2, behavior: behavior });
+  }
+  prev.addEventListener('click', function () { step(-1); });
+  next.addEventListener('click', function () { step(1); });
+
+  function arrows() {
+    prev.disabled = strip.scrollLeft <= 2;
+    next.disabled = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 2;
+  }
+  strip.addEventListener('scroll', arrows, { passive: true });
+  window.addEventListener('resize', arrows);
+
+  var start = 'grilled-cheese';
+  try {
+    var h = (location.hash || '').replace('#', '');
+    if (h && R.some(function (x) { return x.id === h; })) start = h;
+  } catch (err) {}
+  select(start, start !== 'grilled-cheese');
+  arrows();
+})();
+</script>
+
+</body>
+</html>

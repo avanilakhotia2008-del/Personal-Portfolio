@@ -1,0 +1,2634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avani Lakhotia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800&family=Caveat:wght@600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: one soft, narrow column on warm beige. Rounded paper cards, pill buttons, lots of air. */
+:root {
+  --bg: #F9F3E8;
+  --paper: #FFFCF7;
+  --ink: #5E4F43;
+  --muted: #85766A;
+  --line: #EBE0CE;
+  --accent: #EFC5B6;
+  --accent-ink: #5E4F43;
+  --blush: #F6DDD2;
+  --sage: #E6EBDA;
+  --sage-ink: #4F6443;
+  --x: #B5655A;
+  --o: #5F7A52;
+  --code-bg: #F4ECDD;
+  --code-ink: #6A5A4D;
+  --f-display: 'Nunito', 'Trebuchet MS', system-ui, sans-serif;
+  --f-body: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+  --f-hand: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+  color-scheme: light;
+  --f-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+.wrap {
+  max-width: 44rem;
+  margin-inline: auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3, p, ul { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--x); outline-offset: 3px; }
+
+/* Nav */
+.nav .wrap { padding-block: 22px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.mark { font-weight: 800; text-decoration: none; }
+.links a { text-decoration: none; color: var(--muted); font-weight: 600; }
+.links a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--blush); text-decoration-thickness: 3px; text-underline-offset: 5px; }
+
+/* Hero */
+.hero .wrap { padding-block: 56px 64px; display: grid; gap: 14px; justify-items: start; }
+.hi { font-family: var(--f-hand); font-weight: 600; font-size: 1.9rem; line-height: 1; color: var(--x); }
+h1 { font-weight: 800; font-size: clamp(2.5rem, 10vw, 3.9rem); line-height: 1.05; letter-spacing: -0.02em; }
+h1 .hl { background: linear-gradient(transparent 62%, var(--blush) 62% 94%, transparent 94%); padding-inline: 0.06em; }
+.lede { max-width: 32rem; font-size: 1.1rem; color: var(--muted); margin-top: 6px; }
+.facts { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.facts li { font-size: 0.88rem; font-weight: 600; padding: 6px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); }
+
+/* Projects */
+.projects .wrap { padding-block: 8px 72px; }
+.sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+h2 { font-weight: 800; font-size: 1.7rem; line-height: 1.1; }
+.count { font-family: var(--f-hand); font-size: 1.4rem; font-weight: 600; color: var(--muted); }
+
+.proj {
+  padding: 26px; margin-bottom: 16px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 24px;
+}
+.proj-head { display: flex; flex-wrap: wrap; gap: 16px 24px; justify-content: space-between; align-items: end; }
+.proj-text { min-width: 0; flex: 1 1 18rem; display: grid; gap: 8px; justify-items: start; }
+.kind { font-size: 0.78rem; font-weight: 700; padding: 3px 12px; border-radius: 999px; background: var(--sage); color: var(--sage-ink); }
+h3 { font-weight: 800; font-size: 1.4rem; line-height: 1.2; }
+.desc { color: var(--muted); max-width: 34rem; }
+.desc code { font-family: var(--f-mono); font-size: 0.85em; background: var(--code-bg); padding: 1px 6px; border-radius: 6px; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; min-height: 44px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--paper); font-weight: 700; text-decoration: none; cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { background: var(--blush); border-color: var(--blush); }
+.btn:hover { background: var(--blush); border-color: var(--blush); color: var(--ink); }
+.btn.off { border-style: dashed; color: var(--muted); cursor: default; background: transparent; }
+.btn.off:hover { background: transparent; border-color: var(--line); color: var(--muted); }
+
+details.panel { margin-top: 14px; }
+details.panel > summary {
+  list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 700; min-height: 44px; padding: 8px 18px; border-radius: 999px; background: var(--bg);
+  border: 1px solid var(--line);
+}
+details.panel > summary:hover { background: var(--blush); border-color: var(--blush); color: var(--ink); }
+details.panel > summary::-webkit-details-marker { display: none; }
+details.panel > summary::before { content: "+"; font-weight: 800; }
+details.panel[open] > summary::before { content: "\2212"; }
+.panel-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 16px; }
+.demo, .code { min-width: 0; }
+.demo { background: var(--bg); border-radius: 18px; padding: 20px; display: grid; gap: 12px; align-content: start; }
+.demo-title { font-family: var(--f-hand); font-weight: 600; font-size: 1.4rem; line-height: 1; color: var(--x); }
+.note { font-size: 0.85rem; color: var(--muted); }
+
+.code { background: var(--code-bg); color: var(--code-ink); border-radius: 18px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.code-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 10px 8px 18px; }
+.code-title { font-family: var(--f-mono); font-size: 0.8rem; opacity: 0.8; }
+.copy { font-size: 0.82rem; font-weight: 700; min-height: 36px; padding: 4px 16px; cursor: pointer; background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; }
+.copy:hover { background: var(--blush); border-color: var(--blush); color: var(--ink); }
+.code pre { margin: 0; padding: 6px 18px 18px; overflow: auto; max-height: 24rem; font-family: var(--f-mono); font-size: 0.8rem; line-height: 1.6; tab-size: 4; }
+.code pre code { font-family: inherit; }
+
+/* Palindrome demo */
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 700; font-size: 0.9rem; }
+.field input { width: 100%; min-height: 46px; padding: 8px 16px; font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; }
+.field input:focus-visible { border-color: var(--x); outline-offset: 1px; }
+.out { display: grid; gap: 2px; overflow-wrap: anywhere; }
+.out .cleaned { color: var(--muted); font-size: 0.88rem; }
+.verdict { font-weight: 800; font-size: 1.25rem; }
+.verdict.yes { color: var(--o); }
+.verdict.no { color: var(--x); }
+
+/* Tic tac toe demo */
+.ttt { display: grid; grid-template-columns: 1.6rem repeat(3, 3.6rem); gap: 8px; justify-content: start; align-items: center; }
+.ttt .axis { font-size: 0.85rem; font-weight: 700; color: var(--muted); text-align: center; }
+.cell { width: 3.6rem; height: 3.6rem; cursor: pointer; font-weight: 800; font-size: 1.6rem; line-height: 1; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; }
+.cell:hover:not(:disabled) { background: var(--blush); }
+.cell:disabled { cursor: default; }
+.cell.x { color: var(--x); }
+.cell.o { color: var(--o); }
+.cell.win { background: var(--blush); }
+.status { font-weight: 700; min-height: 1.6em; }
+.score { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.again { justify-self: start; }
+
+.foot .wrap { padding-block: 8px 40px; text-align: center; font-family: var(--f-hand); font-size: 1.4rem; font-weight: 600; color: var(--muted); }
+
+@media (min-width: 760px) {
+  .panel-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
+}
+.devnote { max-width: 36rem; background: var(--blush); border-radius: 18px; padding: 14px 20px; font-size: 0.95rem; margin-top: 6px; }
+.grp { font-family: var(--f-hand); font-weight: 600; font-size: 1.7rem; line-height: 1; color: var(--x); margin: 30px 0 12px; }
+.credit { font-size: 0.85rem; color: var(--muted); max-width: 34rem; }
+.panel-body.solo { grid-template-columns: minmax(0, 1fr); }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+.demo label { font-weight: 700; font-size: 0.9rem; display: inline-flex; flex-direction: column; gap: 4px; }
+.demo .row label { flex: 0 1 auto; }
+.demo input[type=text], .demo input[type=number], .demo textarea, .demo select {
+  min-height: 42px; padding: 6px 14px; font: inherit; font-weight: 500; color: var(--ink);
+  background: var(--paper); border: 1px solid var(--line); border-radius: 14px; max-width: 100%;
+}
+.demo textarea { width: 100%; resize: vertical; font-family: var(--f-mono); font-size: 0.82rem; line-height: 1.5; padding: 10px 14px; }
+.demo input.num { width: 5rem; }
+.demo .field { display: grid; gap: 6px; }
+.demo .field input, .demo .field textarea { width: 100%; }
+.demo .field label { display: block; }
+.row { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: end; }
+.mini {
+  min-height: 42px; padding: 6px 18px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--paper); font-weight: 700; cursor: pointer; transition: background 0.15s ease;
+}
+.mini:hover { background: var(--blush); border-color: var(--blush); }
+.mini.on { background: var(--blush); border-color: var(--blush); }
+.mini.sm { min-width: 42px; padding: 6px 0; }
+.mini.off { background: var(--line); color: var(--muted); text-decoration: line-through; }
+.term {
+  background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 12px;
+  font-family: var(--f-mono); font-size: 0.78rem; line-height: 1.5; white-space: pre-wrap;
+  height: 17rem; overflow: auto; overflow-wrap: anywhere;
+}
+.term .you { color: var(--x); margin-top: 8px; }
+.term div + div { margin-top: 6px; }
+canvas.dc { width: 100%; max-width: 30rem; height: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); touch-action: manipulation; cursor: pointer; }
+.sgrid { display: grid; grid-template-columns: repeat(9, 1fr); width: min(100%, 22rem); border: 2px solid var(--ink); border-radius: 10px; overflow: hidden; background: var(--paper); }
+.sgrid input {
+  width: 100%; min-width: 0; aspect-ratio: 1; min-height: 0; padding: 0; text-align: center;
+  border: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0;
+  font-weight: 700; font-size: 1rem; background: var(--paper);
+}
+.sgrid input.bR { border-right: 2px solid var(--ink); }
+.sgrid input.bB { border-bottom: 2px solid var(--ink); }
+.sgrid input.g { background: var(--sage); color: var(--sage-ink); }
+.sgrid input.sel { background: var(--blush); }
+.sgrid input.bad { color: var(--x); }
+.swatch { display: inline-block; width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--line); padding: 0; }
+.btn-sw { cursor: pointer; }
+.btn-sw:hover { box-shadow: 0 0 0 2px var(--ink); }
+.pre { white-space: pre-wrap; font-family: var(--f-mono); font-weight: 500; font-size: 0.85rem; }
+.piles { display: grid; gap: 8px; }
+.pile { display: grid; gap: 4px; }
+.pl { font-weight: 700; font-size: 0.9rem; }
+.dots { display: flex; flex-wrap: wrap; gap: 5px; min-height: 16px; }
+.dot { width: 16px; height: 16px; border-radius: 50%; background: var(--x); }
+.codes { display: grid; gap: 12px; min-width: 0; align-content: start; }
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="#top">Avani Lakhotia</a>
+    <nav class="links" aria-label="Sections">
+      <a href="#projects">Projects</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="hi">hi, I'm</p>
+    <h1>Avani <span class="hl">Lakhotia</span></h1>
+    <p class="lede">I build websites and small programs. I'm co-president of my school's Girls Who Code club, and I'm interested in cloud computing, cybersecurity and full-stack development.</p>
+    <div class="devnote"><p><strong>Development.</strong> This portfolio and the Brain Rot Cookbook were built with AI-assisted coding. I came up with the concepts, directed the features and design, and refined both through testing and iteration. Every other project here is a program I wrote myself.</p></div>
+    <ul class="facts">
+      <li>SkillsUSA Web Design &amp; Development</li>
+      <li>1st at state, top 10 nationally</li>
+      <li>HTML · CSS · JavaScript · C++ · Python</li>
+    </ul>
+  </div>
+</section>
+
+<section class="projects" id="projects"><div class="wrap"><div class="sec-head"><h2>Projects</h2><span class="count">12 little projects</span></div><p class="grp">Websites</p><article class="proj">
+      <div class="proj-head">
+        <div class="proj-text">
+          <p class="kind">Website · HTML, CSS, JavaScript</p>
+          <h3>Brain Rot Cookbook</h3>
+          <p class="desc">A recipe catalog where each real recipe has a brain rot version underneath it. Scroll the catalog, tap a recipe, and read both. Grilled cheese, pancakes, waffles, French toast and scrambled eggs.</p>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="cookbook.html">Open site &#8599;</a>
+        </div>
+      </div>
+    </article><article class="proj">
+      <div class="proj-head">
+        <div class="proj-text">
+          <p class="kind">Website · SkillsUSA</p>
+          <h3>SkillsUSA Oregon Website</h3>
+          <p class="desc">The website for SkillsUSA Oregon.</p>
+        </div>
+        <div class="actions" id="skills-actions"></div>
+      </div>
+    </article><p class="grp">C++</p><article class="proj" id="palindrome">
+      <div class="proj-head">
+        <div class="proj-text">
+          <p class="kind">Program · C++</p>
+          <h3>Palindrome Checker</h3>
+          <p class="desc">Reads up to 80 characters, strips spaces and punctuation, lowercases the rest, reverses it, and compares the two with <code>strcmp</code>.</p>
+        </div>
+      </div>
+      <details class="panel">
+        <summary>Peek inside</summary>
+        <div class="panel-body">
+          <div class="demo">
+            <p class="demo-title">try it here</p>
+            <div class="field">
+              <label for="pal-input">Enter a series of characters (80 max)</label>
+              <input id="pal-input" type="text" maxlength="80" value="A man, a plan, a canal: Panama" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="out" aria-live="polite">
+              <span class="cleaned" id="pal-clean"></span>
+              <span class="verdict" id="pal-verdict"></span>
+            </div>
+            <p class="note">This demo runs the same steps in JavaScript. The C++ program is on the right.</p>
+          </div>
+          <div class="code">
+            <div class="code-bar">
+              <span class="code-title">palindrome.cpp</span>
+              <button class="copy" type="button" data-src="src-pal">Copy</button>
+            </div>
+            <pre tabindex="0"><code data-src="src-pal"></code></pre>
+          </div>
+        </div>
+      </details>
+    </article><article class="proj" id="tictactoe">
+      <div class="proj-head">
+        <div class="proj-text">
+          <p class="kind">Program · C++</p>
+          <h3>Tic Tac Toe</h3>
+          <p class="desc">A two-player game in the terminal. It reads each move as a row letter and column number, rejects bad input, checks rows, columns and diagonals for a win, detects ties, keeps score across games, and asks to play again.</p>
+        </div>
+      </div>
+      <details class="panel">
+        <summary>Peek inside</summary>
+        <div class="panel-body">
+          <div class="demo">
+            <p class="demo-title">try it here</p>
+            <div class="ttt" id="ttt-board" role="group" aria-label="Tic tac toe board"></div>
+            <p class="status" id="ttt-status" aria-live="polite"></p>
+            <p class="score" id="ttt-score"></p>
+            <button class="btn again" id="ttt-again" type="button" hidden>Play again</button>
+            <p class="note">Two players on one screen. X goes first, like in the C++ version.</p>
+          </div>
+          <div class="code">
+            <div class="code-bar">
+              <span class="code-title">tictactoe.cpp</span>
+              <button class="copy" type="button" data-src="src-ttt">Copy</button>
+            </div>
+            <pre tabindex="0"><code data-src="src-ttt"></code></pre>
+          </div>
+        </div>
+      </details>
+    </article><p class="grp">Python</p><article class="proj" id="zuul"><div class="proj-head"><div class="proj-text"><p class="kind">Game · Python</p><h3>World of Zuul: Luxury Mall</h3><p class="desc">A text adventure set in a 15-room luxury mall. Walk between stores, grab and drop items, check your inventory, and reach the theatre with a pizza slice to win.</p><p class="credit">Built on the World of Zuul framework by Michael Kölling and David J. Barnes. I designed the mall map and items, and added the grab, drop and inventory commands and the win condition.</p></div></div><details class="panel"><summary>Peek inside</summary><div class="panel-body"><div class="demo" id="demo-zuul"></div><div class="codes"><div class="code"><div class="code-bar"><span class="code-title">Game.py</span><button class="copy" type="button" data-src="src-Game.py">Copy</button></div><pre tabindex="0"><code data-src="src-Game.py"></code></pre></div><div class="code"><div class="code-bar"><span class="code-title">Room.py</span><button class="copy" type="button" data-src="src-Room.py">Copy</button></div><pre tabindex="0"><code data-src="src-Room.py"></code></pre></div><div class="code"><div class="code-bar"><span class="code-title">Parser.py</span><button class="copy" type="button" data-src="src-Parser.py">Copy</button></div><pre tabindex="0"><code data-src="src-Parser.py"></code></pre></div><div class="code"><div class="code-bar"><span class="code-title">Command.py</span><button class="copy" type="button" data-src="src-Command.py">Copy</button></div><pre tabindex="0"><code data-src="src-Command.py"></code></pre></div><div class="code"><div class="code-bar"><span class="code-title">CommandWords.py</span><button class="copy" type="button" data-src="src-CommandWords.py">Copy</button></div><pre tabindex="0"><code data-src="src-CommandWords.py"></code></pre></div></div></div></details></article><article class="proj" id="life"><div class="proj-head"><div class="proj-text"><p class="kind">Simulation · Python · Tkinter</p><h3>Conway&#x27;s Game of Life</h3><p class="desc">A 25 by 25 grid where you click cells to bring them to life, then step through generations or run it automatically. Each cell counts its living neighbours to decide who survives.</p></div></div><details class="panel"><summary>Peek inside</summary><div class="panel-body"><div class="demo" id="demo-life"></div><div class="codes"><div class="code"><div class="code-bar"><span class="code-title">life.py</span><button class="copy" type="button" data-src="src-life.py">Copy</button></div><pre tabindex="0"><code data-src="src-life.py"></code></pre></div></div></div></details></article><article class="proj" id="sudoku"><div class="proj-head"><div class="proj-text"><p class="kind">Game · Python · Tkinter</p><h3>Sudoku</h3><p class="desc">A Sudoku window with easy, medium and hard buttons, a 9 by 9 grid, and a possible-numbers tool. Select a cell and toggle which digits are still possible, and ruled-out numbers turn gray.</p><p class="credit">Built with Lakisha Zakaria for a design cycle project.</p></div></div><details class="panel"><summary>Peek inside</summary><div class="panel-body"><div class="demo" id="demo-sudoku"></div><div class="codes"><div class="code"><div class="code-bar"><span class="code-title">sudoku.py</span><button class="copy" type="button" data-src="src-sudoku.py">Copy</button></div><pre tabindex="0"><code data-src="src-sudoku.py"></code></pre></div></div></div></details></article><article class="proj" id="floodfill"><div class="proj-head"><div class="proj-text"><p class="kind">Graphics · Python · Tkinter</p><h3>Flood Fill</h3><p class="desc">Click a region of an image and it fills with the RGB color you type in. A recursive fill spreads outward from the click and tracks visited pixels in a set.</p></div></div><details class="panel"><summary>Peek inside</summary><div class="panel-body"><div class="demo" id="demo-floodfill"></div><div class="codes"><div class="code"><div class="code-bar"><span class="code-title">floodfill.py</span><button class="copy" type="button" data-src="src-floodfill.py">Copy</button></div><pre tabindex="0"><code data-src="src-floodfill.py"></code></pre></div></div></div></details></article><article class="proj" id="cipher"><div class="proj-head"><div class="proj-text"><p class="kind">Program · Python</p><h3>Cipher Tool</h3><p class="desc">Encrypts and decrypts messages with three ciphers: Scytale, Caesar and Vigenère. It cleans the message first and wraps around the alphabet with modular arithmetic.</p></div></div><details class="panel"><summary>Peek inside</summary><div class="panel-body"><div class="demo" id="demo-cipher"></div><div class="codes"><div class="code"><div class="code-bar"><span class="code-title">cipher.py</span><button class="copy" type="button" data-src="src-cipher.py">Copy</button></div><pre tabindex="0"><code data-src="src-cipher.py"></code></pre></div></div></div></details></article><article class="proj" id="sorting"><div class="proj-head"><div class="proj-text"><p class="kind">Program · Python</p><h3>Sorting Algorithms</h3><p class="desc">Reads numbers from an input file, sorts them with bubble, selection, counting or quick sort, times the sort in nanoseconds, and writes the result to a file.</p></div></div><details class="panel"><summary>Peek inside</summary><div class="panel-body"><div class="demo" id="demo-sorting"></div><div class="codes"><div class="code"><div class="code-bar"><span class="code-title">sorting.py</span><button class="copy" type="button" data-src="src-sorting.py">Copy</button></div><pre tabindex="0"><code data-src="src-sorting.py"></code></pre></div></div></div></details></article><article class="proj" id="bingo"><div class="proj-head"><div class="proj-text"><p class="kind">Program · Python</p><h3>Bingo Simulator</h3><p class="desc">Reads the drawn numbers and the bingo cards from a file, marks each card as numbers are drawn, and writes every winning card to an output file. A full row or column wins.</p></div></div><details class="panel"><summary>Peek inside</summary><div class="panel-body"><div class="demo" id="demo-bingo"></div><div class="codes"><div class="code"><div class="code-bar"><span class="code-title">bingo.py</span><button class="copy" type="button" data-src="src-bingo.py">Copy</button></div><pre tabindex="0"><code data-src="src-bingo.py"></code></pre></div></div></div></details></article><article class="proj" id="nim"><div class="proj-head"><div class="proj-text"><p class="kind">Game · Python</p><h3>Nim</h3><p class="desc">A two-player game with three piles of 1 to 10 items. Players take turns removing items from one pile, and whoever takes the last item loses. Bad input is caught and asked again.</p></div></div><details class="panel"><summary>Peek inside</summary><div class="panel-body"><div class="demo" id="demo-nim"></div><div class="codes"><div class="code"><div class="code-bar"><span class="code-title">nim.py</span><button class="copy" type="button" data-src="src-nim.py">Copy</button></div><pre tabindex="0"><code data-src="src-nim.py"></code></pre></div></div></div></details></article></div></section>
+
+<footer class="foot">
+  <div class="wrap">made by Avani &#10047;</div>
+</footer>
+
+<script type="text/plain" id="src-pal">#include <iostream>
+#include <cstring>
+#include <cctype>
+using namespace std;
+
+int main()
+{
+    // holds 80 characters + null character
+  char input[81]; //creates character array called input
+  char cleaned[81]; // creates character array called cleaned
+  char backwards[81]; //creates character array called backwards
+
+    cout << "Enter a series of characters (80 characters max): "; //entry for user
+    cin.getline(input, 81); //reads the line and stores it inside input
+
+    int length = 0;
+
+    // remove spaces and punctuation
+    for (int i = 0; input[i] != '\0'; i++)
+    {
+        if (isalnum(input[i]))
+        {
+	  cleaned[length] = tolower(input[i]); // puts characters into cleaned and lowercase
+            length++;
+        }
+    }
+
+    cleaned[length] = '\0';
+
+    // reverse the cleaned string
+    for (int i = 0; i < length; i++)
+    {
+      backwards[i] = cleaned[length - 1 - i];  //taking characters from cleaned and putting them into backwards
+    }
+
+    backwards[length] = '\0';
+
+    // check if they're the same
+    if (strcmp(cleaned, backwards) == 0) // finally compares the string
+    {
+        cout << "Palindrome." << endl;
+    }
+    else
+    {
+        cout << "Not a palindrome." << endl;
+    }
+
+    return 0;
+}
+</script>
+<script type="text/plain" id="src-ttt">/* Avani Lakhotia
+   10/09/2027
+   This is a tictactoe game designed for two players. It reads players' inputs places them on the board, checks for wins, and finally lets the player know if they won and asks if they wanna play again and keeps showing scores.
+
+*/
+
+
+
+
+#include <iostream> 
+#include <array>
+#include <string>
+using namespace std;
+
+
+// a modern 3x3 std::array of chars, declared the board outside main so all functions can access it
+array<array<char, 3>, 3> board = {{
+    {'_', '_', '_'},
+    {'_', '_', '_'},
+    {'_', '_', '_'}
+  }};
+
+// functions decration
+bool  player_turn(char player); // prototype, have it defined at the top
+bool is_valid_move( int row_index,int col_index);//bool so it returns true or false
+void  place_player (char player,int row_index,int col_index);//places player
+void print_board (); //prints board
+void reset_board(); // resets board
+
+
+bool check_row_win( char player); //row win
+bool check_col_win( char player); //col win
+bool check_tie(); //tie check
+bool check_win( char player); //final checking win where i call on all the fuctions above
+bool check_diag_win (char player); //check diag win
+
+
+//main 
+int main(){
+  char player = 'X'; //x always starts 
+
+  // these variables keep track of scores 
+  int x_wins = 0;
+    int o_wins = 0;
+    int ties = 0;
+
+    print_board(); // prints empty board
+
+    while (true) {
+        // asks the current player to make a move and also if the move is wrong the same player gets a turn
+        if (!player_turn(player)) {
+            continue;
+        }
+
+        // check if the current player won
+        if (check_win(player)) {
+            cout << "Player " << player << " wins!" << endl;
+
+            if (player == 'X') { // adds one to the total score of that player
+                x_wins++;
+            }
+            else {
+                o_wins++;
+            }
+        }
+	// checks if the game ended in a tie
+        else if (check_tie()) {
+            cout << "It's a tie!" << endl;
+	    ties++;
+	}
+        else {
+            // switch players after a valid move
+            if (player == 'X') {
+                player = 'O';
+            }
+            else {
+                player = 'X';
+            }
+	    
+            continue; // starts next turn
+        }
+
+        // Display the total wins after a game ends
+        cout << "X wins: " << x_wins << endl;
+        cout << "O wins: " << o_wins << endl;
+	cout << "Ties: "<< ties << endl;
+
+	// asks if the players want another turn
+	char again;
+	cout << "Do you wanna play again? (y/n): ";
+	cin >> again;
+
+	// ends loop if player says no
+	if (again == 'n' || again == 'N'){
+	  break;
+	}
+        // reset the board and start a new game
+        reset_board();
+        player = 'X';
+        print_board();
+    }
+
+    return 0;
+}
+
+
+//all the functions written here
+
+//resets the board
+void reset_board(){
+    for (int row_index = 0; row_index < 3; row_index++){
+        for (int col_index = 0; col_index < 3; col_index++){
+            board[row_index][col_index] = '_';
+        }
+    }
+}
+
+// takes the current player's move and checks if its valid
+bool  player_turn(char player){
+      //asking player for move                                                                          
+  cout << "Player " << player<<  " enter your row: "<<endl;
+    char row;
+    cin >> row;
+    cout << "Player " << player <<" enter your col: "<<endl;
+    int  col;
+    cin >> col;
+    // handles input that cannot be read as the data type, i had to research about this one
+    if (cin.fail()) {
+      cin.clear();
+      cin.ignore(1000, '\n');
+      cout << "Invalid input!" << endl;
+      return false;
+    }
+    // converting answers to indexes                                                                  
+    int row_index = row - 'a';// converts a-c to 0-2
+    int col_index = col - 1; // converts 1-3 to 0-2
+
+    //checks and moves player to the place                                                            
+    if (is_valid_move(row_index, col_index)) {
+      place_player(player, row_index, col_index);
+      print_board();
+      return true;
+    }
+    else {
+      cout << "Invalid move!" << endl;
+      return false;
+    }
+   
+}
+
+// checks whether the selected position is indie the board and also if its valid
+
+bool is_valid_move(int row_index, int col_index) {
+  if (row_index < 0 || row_index >= 3 || //making sure row and col are in between range
+        col_index < 0 || col_index >= 3) {
+        return false;
+    }
+  // if the postion is open 
+    if (board[row_index][col_index] != '_') {
+        return false;
+    }
+
+    return true;
+}
+
+// places x or o at this position
+void place_player(char player, int row_index, int col_index) {
+    board[row_index][col_index] = player;
+}
+
+// displays the baord with colun numbers and row letters
+void print_board(){
+     cout << "\n  1 2 3 " << endl;
+     // stores these letters to identity my rows
+    array<char, 3> letters = {'a', 'b', 'c'};
+
+    int counter = 0;
+    for (const auto& row : board) { // outer loop that goes through every row of my 2d array
+      cout << letters [counter] << " "; //prints letters based on the row                           
+    for (const auto& cell : row) { // this is the inner loop, it visits every individual elements   
+      cout << cell << " "; // this space is the space between the underscores                    
+        }
+    cout << "\n";
+    counter++;
+    }
+}
+
+
+// checks if the player has 3 in a row 
+bool check_row_win( char player){
+  for (int row_index = 0; row_index < 3; row_index++) {
+    if (board[row_index][0] == player  &&
+	board [row_index][1] == player &&
+	board [row_index][2] == player) {
+	return true;
+	}
+
+  }
+  
+
+  return false;
+}
+// checks if the player has 3 in a col
+bool check_col_win( char player){
+  for (int col_index = 0; col_index < 3; col_index++) {
+    if (board [0][col_index] == player  &&
+        board [1] [col_index] == player &&
+        board [2] [col_index] == player) {
+	return true;
+	}}
+
+  return false;
+}
+
+// diagonal posibility
+bool check_diag_win (char player){
+  if (board [0][0] == player &&
+      board [1][1] == player &&
+      board [2][2] == player){
+
+    return true;
+  }
+  if (board [0][2] == player &&
+      board [1][1] == player &&
+      board [2][0] == player){
+
+    return true;
+  }
+
+  return false;
+}
+
+//checks tie
+
+bool check_tie(){
+  for (int row_index = 0; row_index < 3; row_index++){ // looks for any empty remaining empty positons
+        for (int col_index = 0; col_index < 3; col_index++){
+           if (board[row_index][col_index] == '_'){
+                return false;
+            }
+        }
+    }
+  
+  // checks if another player has won alr
+    if (check_win('X') || check_win('O')){
+        return false;
+    }
+
+    return true;
+}
+// combines all those top 3 functions into one check win
+bool check_win(char player){
+   if (check_row_win (player)){
+     return true; }
+   if (check_col_win (player)){
+     return true;}
+   if (check_diag_win (player)){
+     return true;}
+
+   return false;
+}</script>
+<script type="text/plain" id="src-Game.py">from CommandWords import CommandWords
+from Command import Command
+from Parser import Parser
+from Room import Room
+# -*- coding: utf-8 -*-
+'''
+Created on Tue Apr 16 13:37:54 2024
+
+@author: galbraithja
+
+This class is the main class of the "World of Zuul" application. "World of Zuul" is a very simple, text based adventure game.  Users can walk around some scenery. That's all. It should really be extended to make it more interesting!
+
+To play this game, create an instance of this class and call the "play" method.
+
+This main class creates and initialises all the others: it creates all rooms, creates the parser and starts the game.  It also evaluates and executes the commands that the parser returns.
+
+@author  Michael Kolling and David J. Barnes
+@version 1.0 (February 2002)
+'''
+
+class Game:
+    parser = Parser()
+    currentRoom = None
+        
+    '''Create the game and initialise its internal map.'''
+    def __init__(self):
+        self.createRooms()
+        self.inventory = []
+        
+    
+    '''Create all the rooms and link their exits together.'''
+    def createRooms(self):
+        self.items = []
+        # create the rooms and adds a little description
+        basement = Room("in the basement of the mall, surrounded by cars coming in and out")
+        entrance = Room("at the entrance of the mall, the glass gates open, and shoppers rush in and out")
+        gucci = Room("inside Gucci, filled with luxury displays, polished floors")
+        prada = Room("inside Prada, where air smells faintly of leather and perfume")
+        louis = Room("inside Louis Vuitton, surrounded by patterned handbags, shoes, and soft lighting")
+        dior = Room("inside Dior, glowing with elegance, mirrors everywhere")
+        chanel = Room("inside Chanel, decorated in black and white, glass case displaying perfumes and jewelry")
+        balenciaga = Room("inside Balenciaga, with modern designs, bold colors")
+        versace = Room("inside Versace, dramatic lighting and edgy fashion statements")
+        burberry = Room("inside Burberry, featuring classic coats")
+        rolex = Room("inside Rolex, luxury watches in those glass cases all around the store")
+        cartier = Room("inside Cartier, sparkling with diamonds and gold jewelry")
+        tiffany = Room("inside Tiffany & Co., glowing with the blue decor and shining gemstones")
+        food = Room("inside Food Court, filled with the smell of pizza, burgers, and fries")
+        theatre = Room("inside theatre, dim lighting, rows of seating and a massive screen waiting for the movie to begin.")
+        
+        
+        # initialise room exits
+        basement.setExit ("north", entrance)
+        
+        entrance.setExit ("north", gucci)
+        entrance.setExit ("south", basement)
+        
+        gucci.setExit ("west", louis)
+        gucci.setExit ("east", prada)
+        
+        louis.setExit ("east", gucci)
+        louis.setExit ("north", versace)
+        
+        
+        prada.setExit ("north", chanel)
+        prada.setExit ("west", gucci)
+        
+        dior.setExit ("north", tiffany)
+        dior.setExit ("west", chanel)
+        
+        chanel.setExit ("west", balenciaga)
+        chanel.setExit ("east", dior)
+        chanel.setExit ("south", prada)
+        
+        balenciaga.setExit ("west", versace)
+        balenciaga.setExit ("east", chanel)
+        balenciaga.setExit ("north", rolex)
+        
+        versace.setExit ("east", balenciaga)
+        versace.setExit ("north", burberry)
+        
+        burberry.setExit ("east", rolex)
+        burberry.setExit ("south", versace)
+        
+        rolex.setExit ("east", cartier)
+        rolex.setExit ("west", burberry)
+        rolex.setExit ("south", balenciaga)
+        
+        cartier.setExit ("east", tiffany)
+        cartier.setExit ("west", rolex)
+        cartier.setExit ("north", food)
+        
+        
+        tiffany.setExit ("west", cartier)
+        
+        food.setExit ("west", theatre)
+        food.setExit ("south", cartier)
+        
+        #contains the 5 items distributed in some of the rooms
+        rolex.addItem ("watch")
+        food.addItem ("pizza")
+        dior.addItem ("lip Oil")
+        chanel.addItem ("perfume")
+        prada.addItem ("bag")
+
+
+        self.currentRoom = entrance    # start game outside
+    
+
+    '''Main play routine.  Loops until end of play.'''
+    def play(self):
+        self.printWelcome()
+
+        # Enter the main command loop.  Here we repeatedly read commands and
+        # execute them until the game is over.
+                
+        finished = False
+        while (not finished):
+            command = self.parser.getCommand()
+            finished = self.processCommand(command)
+        print("Thank you for playing. Good bye.")
+
+    '''Print out the opening message for the player.'''
+    def printWelcome(self):
+        print()
+        print("Welcome to Luxury Mall!")
+        print("Luxury Mall is a new, incredibly adventurous game.")
+        print("You want to watch a movie so your job is to get to the theatre but also remember to grab a pizza slice")
+        #adds instructions for more clarity
+        print ("Here are some instructions: \n 1) To go in a direction type 'go [your direction]'\n 2. to grab an item type 'grab [item name]'\n 3. to drop an item type 'drop [item name]' \n 1) To go in a direction type 'go [your direction]'\n 2. to grab an item type 'grab [item name]'\n 4. to check your inventory type 'inventory' \n 5. If you need help with anything else simply type 'help' ")
+        print();
+        print(self.currentRoom.getLongDescription())
+
+    '''Given a command, process (that is: execute) the command. If this command ends the game, true is returned, otherwise false is returned.'''
+    def processCommand(self, command):
+        wantToQuit = False
+        commandWord = command.getCommandWord()
+        if(command.isUnknown()):
+            print("I don't know what you mean...")
+            return False
+        elif (commandWord == "grab"): #adds command for grab
+            self.grabItem(command)
+        elif (commandWord == "drop"): #adds command for drop
+            self.dropItem(command)
+        elif (commandWord == "inventory"): #adds command for inventory
+            self.showInventory ()
+        if (commandWord == "help"):  #command for help
+            self.printHelp()
+        elif (commandWord == "go"): #command for go
+            return self.goRoom(command)
+        elif (commandWord == "quit"):   #command to quit
+            wantToQuit = self.quitGame(command)
+        
+        return wantToQuit
+
+    # implementations of user commands:
+
+    def printHelp(self):
+        print()
+        print("Your goal is to get to the theatre and grab a pizza ")
+        print("Here are some instructions: \n 1) To go in a direction type 'go [your direction]'\n 2. to grab an item type 'grab [item name]'\n 3. to drop an item type 'drop [item name]' \n 1) To go in a direction type 'go [your direction]'\n 2. to grab an item type 'grab [item name]'\n 4. to check your inventory type 'inventory' \n 5. If you need help with anything else simply type 'help'")
+        print("Your command words are:")
+        self.parser.showCommands()
+
+    '''Try to go to one direction. If there is an exit, enter the new room, otherwise print an error message.'''
+    def goRoom(self, command):
+        if (not command.hasSecondWord()):
+            # if there is no second word, we don't know where to go...
+            print("Go where?")
+            return
+
+        direction = command.getSecondWord()
+        holdCurrentRoom = self.currentRoom
+        # Try to leave current room.
+        try:
+            nextRoom = self.currentRoom.getExit(direction)
+            
+            #this is the statement if the person gets a pizza and gets to the theatre
+            if nextRoom.description == "inside theatre, dim lighting, rows of seating and a massive screen waiting for the movie to begin.": 
+                if "pizza" in self.inventory:
+                    self.currentRoom = nextRoom;
+                    print(self.currentRoom.getLongDescription())
+                    print(" \n Congratulations! You have arrived at the Theatre \nenjoy your movie!")
+                    return True
+                else: 
+                    print("You can't enter the theatre, you need the pizza! ")
+                    return
+                
+            #normal room   
+            self.currentRoom = nextRoom
+            print(self.currentRoom.getLongDescription())
+        
+        except:
+            print("There is no door!")
+            self.currentRoom = holdCurrentRoom
+            
+    def grabItem (self,command): #to grab an item
+        if not command.hasSecondWord():
+            print ("Grab what?")
+            return
+        item = command.getSecondWord ()
+        if item in self.currentRoom.items:
+            self.currentRoom.removeItem (item)
+            self.inventory.append(item)
+            print (f"You picked up the {item}.")
+        else:
+            print(f"There is no {item} here.")
+
+    def dropItem (self, command): #to drop an item 
+        if not command.hasSecondWord():
+            print ("Drop what?")
+            return
+        item = command.getSecondWord ()
+        if item in self.inventory:
+            self.inventory.remove (item)
+            self.currentRoom.addItem (item)
+            print (f"You have dropped the {item}.")
+        else:
+            print (f"You don't have a {item}.")
+            
+    def showInventory (self): #shows the inventory
+        if self.inventory:
+            print("You have: " + ", ".join(self.inventory))
+        else:
+            print("Your inventory is empty")
+    
+    '''"Quit" was entered. Check the rest of the command to see whether we really quit the game. Return true, if this command quits the game, false otherwise.'''
+    def quitGame(self, command):
+        if (command.hasSecondWord()):
+            print("Quit what?")
+            return False
+        else:
+            return True  # signal that we want to quit</script>
+<script type="text/plain" id="src-Room.py"># -*- coding: utf-8 -*-
+'''
+Created on Tue Apr 16 13:37:54 2024
+
+@author: galbraithja
+
+Class Room - a room in an adventure game.
+
+This class is the main class of the "World of Zuul" application. "World of Zuul" is a very simple, text based adventure game.
+
+A "Room" represents one location in the scenery of the game.  It is connected to other rooms via exits.  For each existing exit, the room stores a reference to the neighboring room.
+
+@author  Michael Kolling and David J. Barnes
+@version 1.0 (February 2002)
+'''
+class Room:
+
+    '''Create a room described "description". Initially, it has no exits. "description" is something like "in a kitchen" or "in an open court yard".'''
+    def __init__(self, description):
+        self.description = description
+        self.exits = {} # stores exits of this room.
+        self.items =[] #stores items in the room
+
+    '''Define an exit from this room.'''
+    def setExit(self, direction, neighbor):
+        self.exits[direction] = neighbor
+
+    '''Return the description of the room (the one that was defined in the constructor).'''
+    def getShortDescription(self):
+        return self.description
+
+    '''Return a string describing the room's exits, for example "Exits: north west".'''
+    def getExitString(self):
+        returnString = "Exits:";
+        for key in self.exits:
+            returnString += " " + key
+        return returnString
+
+    #to drop something in the room
+    def addItem(self,item):
+        self.items.append(item)
+
+    #to grab something from the room
+    def removeItem (self,item):
+        self.items.remove(item)
+
+    '''Return a long description of this room, in the form:
+        You are in the kitchen.
+        Exits: north west'''
+    def getLongDescription(self):
+        desc = "You are " + self.description +".\n"
+        desc += self.getExitString() +".\n"
+
+        #to add items if there are any
+        if hasattr (self, 'items') and self.items:
+            desc+= "Items in this room: " + ", ".join(self.items)
+        else:
+            desc += "There are no items in the room."
+
+        return desc
+    '''Return the room that is reached if we go from this room in direction "direction". If there is no room in that direction, return None.'''
+    def getExit(self, direction):
+        if (direction in self.exits):
+            return self.exits[direction]
+        else:
+            return None
+</script>
+<script type="text/plain" id="src-Parser.py">from CommandWords import CommandWords
+from Command import Command
+# -*- coding: utf-8 -*-
+'''
+Created on Tue Apr 16 13:37:54 2024
+
+@author: galbraithja
+
+This class is the main class of the "World of Zuul" application. "World of Zuul" is a very simple, text based adventure game.
+
+This parser reads user input and tries to interpret it as an "Adventure" command. Every time it is called it reads a line from the terminal and tries to interpret the line as a two word command. It returns the command as an object of class Command.
+
+The parser has a set of known command words. It checks user input against the known commands, and if the input is not one of the known commands, it returns a command object that is marked as an unknown command.
+
+@author  Michael Kolling and David J. Barnes
+@version 1.0 (February 2002)
+ * This class is the main class of the "World of Zuul" application.
+ * "World of Zuul" is a very simple, text based adventure game.
+ *
+ * This parser reads user input and tries to interpret it as an "Adventure"
+ * command. Every time it is called it reads a line from the terminal and
+ * tries to interpret the line as a two word command. It returns the command
+ * as an object of class Command.
+ *
+ * The parser has a set of known command words. It checks user input against
+ * the known commands, and if the input is not one of the known commands, it
+ * returns a command object that is marked as an unknown command.
+ *
+ * @author  Michael Kolling and David J. Barnes
+ * @version 1.0 (February 2002)
+ */
+'''
+class Parser:
+    commands = CommandWords();  #// holds all valid command words
+
+    def __init__(self):
+        self.commands = CommandWords()
+
+    def getCommand(self):
+        inputLine = ""   # will hold the full input line
+        word1 = None
+        word2 = None
+
+        print("> ")     # print prompt
+
+        try:
+            inputLine = input()
+        except Exception as inst:
+            print("There was an error during reading: " + inst)
+
+        tokenizer = inputLine.split()
+
+        if (len(tokenizer) > 0):
+            word1 = tokenizer[0]    # get first word
+        else:
+            word1 = None
+        if (len(tokenizer) > 1):
+            word2 = tokenizer[1]    # get second word
+        else:
+            word2 = None
+
+        # note: we just ignore the rest of the input line.
+
+        # Now check whether this word is known. If so, create a command
+        # with it. If not, create a "null" command (for unknown command).
+
+        if (self.commands.isCommand(word1)):
+            return Command(word1, word2)
+        else:
+            return Command(None, word2)
+
+    '''Print out a list of valid command words.'''
+    def showCommands(self):
+        self.commands.showAll()
+</script>
+<script type="text/plain" id="src-Command.py"># -*- coding: utf-8 -*-
+"""
+Created on Tue Apr 16 13:37:54 2024
+
+@author: galbraithja
+
+This class is the main class of the "World of Zuul" application. "World of Zuul" is a very simple, text based adventure game.
+
+This class holds information about a command that was issued by the user. A command currently consists of two strings: a command word and a second word (for example, if the command was "take map", then the two strings obviously are "take" and "map").
+
+The way this is used is: Commands are already checked for being valid command words. If the user entered an invalid command (a word that is not known) then the command word is <null>.
+
+If the command had only one word, then the second word is <null>.
+
+@author  Michael Kolling and David J. Barnes
+@version 1.0 (February 2002)
+"""
+
+class Command:
+
+    '''Create a command object. First and second word must be supplied, but either one (or both) can be null. The command word should be null to indicate that this was a command that is not recognised by this game.'''
+    def __init__(self, first, second):
+        self.commandWord = first
+        self.secondWord = second
+
+    '''Return the command word (the first word) of this command. If the command was not understood, the result is null.'''
+    def getCommandWord(self):
+        return self.commandWord
+
+
+    '''Return the second word of this command. Returns null if there was no second word.'''
+    def getSecondWord(self):
+        return self.secondWord
+
+
+    '''Return true if this command was not understood.'''
+    def isUnknown(self):
+        return (self.commandWord == None)
+
+    '''Return true if the command has a second word.'''
+    def hasSecondWord(self):
+        return (self.secondWord != None)
+</script>
+<script type="text/plain" id="src-CommandWords.py"># -*- coding: utf-8 -*-
+'''
+Created on Tue Apr 16 13:37:54 2024
+
+@author: galbraithja
+
+This class is the main class of the "World of Zuul" application. "World of Zuul" is a very simple, text based adventure game.
+
+This class holds an enumeration of all command words known to the game. It is used to recognise commands as they are typed in.
+
+@author  Michael Kolling and David J. Barnes
+@version 1.0 (February 2002)
+'''
+
+class CommandWords:
+
+    '''a constant array that holds all valid command words'''
+    validCommands = ["go", "quit", "help", "grab", "drop", "inventory"]
+
+    '''Constructor - initialise the command words.'''
+    def __init__(self):
+        # nothing to do at the moment...
+        pass
+
+    '''Check whether a given String is a valid command word. Return true if it is, false if it isn't.'''
+    def isCommand(self, aString):
+        for command in self.validCommands:
+            if command == aString:
+                return True
+        # if we get here, the string was not found in the commands
+        return False
+
+    '''Print all valid commands to System.out.'''
+    def showAll(self):
+        for command in self.validCommands:
+            print(command + "  ");
+        print()
+</script>
+<script type="text/plain" id="src-life.py">"""
+Avani Lakhotia
+This program counts nearby cells and uses that information to decide how the grid changes over time.
+18/01/2026
+"""
+
+import tkinter as tk
+
+root = tk.Tk()
+root.title ("Conway's Life")
+root.geometry ("520x650")
+root.resizable (False, False)
+
+
+#constants
+ROWS = 25
+COLS = 25
+CELL_SIZE = 20
+
+#add the canvas
+canvas = tk.Canvas(
+    root,
+    width = COLS*CELL_SIZE,
+    height = ROWS * CELL_SIZE,
+    )
+canvas.pack( pady = 10)
+
+#creating a 2D grid
+grid= [[False for c in range (COLS)] for r in range (ROWS)]
+
+
+running = False
+
+#drawing the grid
+def draw_grid():
+    canvas.delete ("all")
+
+    for r in range (ROWS):
+        for c in range (COLS):
+            x1 = c * CELL_SIZE
+            y1 = r * CELL_SIZE
+            x2 = x1 + CELL_SIZE
+            y2 = y1 + CELL_SIZE
+
+            if grid[r][c]:
+                canvas.create_rectangle (x1, y1, x2, y2, fill = "black")
+
+            canvas.create_rectangle (x1, y1, x2, y2, outline = "gray")
+
+
+def cell (event):
+    #switch between alive and dead with a cell is clicked
+    col = event.x // CELL_SIZE
+    row = event.y // CELL_SIZE
+
+    if 0 <= row <ROWS and 0 <= col <COLS:
+        grid [row] [col] = not grid [row][col]
+        draw_grid()
+
+
+
+def neighbours (row, col):
+    #counting the neighbours alive
+    count = 0
+
+    for dr in [-1, 0, 1]:
+        for dc in [-1, 0, 1]:
+            if dr == 0 and dc == 0:
+                continue
+
+            r = row + dr
+            c = col + dc
+
+            if 0 <= r < ROWS and 0 <= c <COLS:
+                if grid [r][c]:
+                    count += 1
+    return count
+
+def step ():
+    #calculates the next gen
+    global grid
+
+    next_grid = [[False for c in range (COLS)]for r in range (ROWS)]
+
+    for r in range (ROWS):
+        for c in range (COLS):
+            alive_neighbours = neighbours (r, c)
+
+            if grid [r][c]:
+                if alive_neighbours == 2 or alive_neighbours == 3:
+                    next_grid [r][c] = True
+            else:
+                if alive_neighbours == 3:
+                    next_grid [r][c] = True
+
+    grid = next_grid
+    draw_grid ()
+
+
+def start ():
+    #starts the simulation
+    global running
+    running = True
+    run_simulation ()
+
+def stop ():
+    #stops the simulation
+    global running
+    running = False
+
+def run_simulation ():
+    if running:
+        step ()
+        root.after (200, run_simulation)
+
+
+
+canvas.bind ("<Button-1>", cell) #mouse clicking
+
+button_frame = tk.Frame (root)
+button_frame.pack (pady =10)
+
+#button for step
+step_button = tk.Button (button_frame, text = "Step", command = step)
+step_button.pack (side = "left", padx = 10)
+
+#button for start
+start_button = tk.Button (button_frame, text = "Start", command = start)
+start_button.pack (side = "left", padx = 10)
+
+#button for stop
+stop_button = tk.Button (button_frame, text = "Stop", command = stop)
+stop_button.pack (side = "left", padx = 10)
+
+
+
+
+draw_grid()
+root.mainloop ()
+</script>
+<script type="text/plain" id="src-sudoku.py">"""
+Avani Lakhotia and Lakisha Zakaria
+5/24/26
+Design Cycle Project- Sudoku!
+"""
+import tkinter as tk
+import random
+
+root = tk.Tk()
+root.geometry('600x500')
+frame = tk.Frame(root)
+frame.pack()
+solution=[]
+selected_cell=None
+entries=[[None for i in range(9)]for j in range(9)]
+button_list=[]
+possible_num_list=[[set(range(1,10)) for i in range(9)]for j in range(9)]
+label = tk.Label(root, text="Sudoku!",font=("Arial", 48))
+label.pack()
+
+def clear_screen():
+    #clear screen
+    for widget in root.winfo_children():
+        widget.destroy()
+
+def update_buttons():
+    if selected_cell is None:
+        return
+
+    r,c=selected_cell
+
+    for i,num_button in enumerate(button_list):
+        num=i+1
+        if num in possible_num_list[r][c]:
+            num_button.config(bg="white")
+        else:
+            num_button.config(bg="light gray")
+def select_cell(r,c):
+    global selected_cell
+    selected_cell=(r,c)
+    #print("selected cell:"+ str(selected_cell))
+    update_buttons()
+
+def num_click(num):
+    if selected_cell is None:
+        return
+
+    r,c=selected_cell
+
+    if num in possible_num_list[r][c]:
+        possible_num_list[r][c].remove(num)
+    else:
+        possible_num_list[r][c].add(num)
+
+    update_buttons()
+def game(level):
+    clear_screen()
+
+    label = tk.Label(root, text="Sudoku!",font=("Arial", 48))
+    label.pack()
+    global user_entries
+    user_entries=[]
+
+    grid_frame=tk.Frame(root)
+    grid_frame.pack()
+
+    for i in range(9):
+        for j in range(9):
+            e=tk.Entry(grid_frame,width=2,font=("Arial", 18))
+            e.grid(row=i,column=j)
+
+            entries[i][j]=e
+
+            e.bind("<Button-1>",lambda event, r=i,c=j: select_cell(r,c))
+
+    #setting up possible numbers section
+    # I will finish the whole marking off numbers with button thing :)
+    number_frame=tk.Frame(root)
+    number_frame.pack()
+
+    possible_numbers=tk.Label(number_frame,text="possible numbers")
+    possible_numbers.pack()
+
+    button_list.clear()
+
+    for num in range(1,10):
+        num_button=tk.Button(number_frame,bg="white",text=str(num),command= lambda n=num: num_click(n))
+        num_button.pack(side="left")
+        button_list.append(num_button)
+
+#check_win()
+
+def easy_click():
+    level="easy"
+    game("easy")
+def med_click():
+    level="med"
+    game("med")
+def hard_click():
+    level="hard"
+    game("hard")
+"""
+def check_win():
+
+def win():
+    clear_screen()
+    win_label=tk.Label(root,text="you win!!")
+    win_label.pack()
+"""
+easy_button=tk.Button(root,text="easy",command=easy_click)
+med_button=tk.Button(root,text="medium",command=med_click)
+hard_button=tk.Button(root,text="hard",command=hard_click)
+
+easy_button.pack()
+med_button.pack()
+hard_button.pack()
+
+root.mainloop()
+</script>
+<script type="text/plain" id="src-floodfill.py">"""
+Avani Lakhotia
+flood fill
+05/10/2026
+"""
+
+import tkinter as tk
+from PIL import Image, ImageTk
+import sys
+sys.setrecursionlimit(100000)
+
+root = tk.Tk()
+root.geometry('400x550')
+frame = tk.Frame(root)
+frame.pack()
+
+image = Image.open('./FloodFill.png')
+pix = image.load()
+photo_image = ImageTk.PhotoImage(image)
+
+#function for filling
+
+def fill(target_color, new_color, x, y, searched):
+    if x<0 or y < 0 or x >= image.width or y>= image.height:
+        return
+    if (x,y) in searched:
+        return
+    if pix [x, y] != target_color:
+        return
+    searched.add((x,y))
+    pix[x,y] = new_color
+
+    fill(target_color, new_color, x-1, y, searched) #left
+    fill(target_color, new_color, x+1, y, searched) #right
+    fill(target_color, new_color, x, y+1, searched) #down
+    fill(target_color, new_color, x, y-1, searched) #up
+
+def mouseClick(event): #Function for mouse clicks.
+    global canvas, labelVar, image, photo_image
+    print("X", event.x, "Y", event.y)
+    print("pix at x,y", pix[event.x,event.y])
+
+    target_color = pix [ event.x, event.y]
+    new_color = (int(redVar.get()), int(greenVar.get()), int(blueVar.get()), 255 )
+    searched = set()
+    fill(target_color, new_color, event.x , event.y, searched)
+
+    photo_image = ImageTk.PhotoImage(image)
+    canvas.create_image(0, 0, anchor=tk.NW, image=photo_image)
+
+
+
+
+canvas = tk.Canvas(root, width=350, height=400, bg='white') #Set up Canvas
+canvas.pack()
+canvas.bind("<Button-1>", mouseClick)
+canvas.create_image(0, 0, anchor=tk.NW, image=photo_image)
+
+instructionLabel = tk.Label(root, bg='white', text="Red:") #Set up label for entry
+instructionLabel.pack()
+
+redVar = tk.StringVar()
+entry_red = tk.Entry(root, textvariable=redVar) #Set up entry box
+entry_red.insert(0, "0")
+entry_red.pack()
+
+instructionLabel = tk.Label(root, bg='white', text="Green:") #Set up label for entry
+instructionLabel.pack()
+
+greenVar = tk.StringVar()
+entry_green = tk.Entry(root, textvariable=greenVar) #Set up entry box
+entry_green.insert(0, "0")
+entry_green.pack()
+
+instructionLabel = tk.Label(root, bg='white', text="Blue:") #Set up label for entry
+instructionLabel.pack()
+
+blueVar = tk.StringVar()
+entry_blue = tk.Entry(root, textvariable=blueVar) #Set up entry box
+entry_blue.insert(0, "0")
+entry_blue.pack()
+
+root.mainloop()
+</script>
+<script type="text/plain" id="src-cipher.py">"""
+Avani Lakhotia
+3/15/2026
+A program that allows multiple ways to encrypt/decrypt messages
+"""
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+#caesar function
+def caesar_encrypt():
+    encrypted = ""
+ 
+    for letter in clean_message: 
+        index = alphabet.index (letter) #finds position in alphabet
+        new_index = (index + offset) % 26 #shifts the letter forward and wraps around alphabets
+        new_letter = alphabet[new_index] #gets new letter
+        encrypted += new_letter
+    
+    print ("Encrypted Message: " + encrypted)
+    
+def caesar_decrypt():
+    decrypted = ""
+    
+    for letter in clean_message: 
+        index = alphabet.index (letter)
+        new_index = (index - offset) % 26 #shifts letter backwards to reverse encryption
+        new_letter = alphabet[new_index]
+        decrypted += new_letter
+    
+    print ("Decrypted Message: " + decrypted)
+
+#vigenere function
+def vigenere_encrypt():
+    encrypted = ""
+    clean_keyword = ""
+    
+    #cleans the keyword
+    for char in keyword:
+        if char.isalpha():
+            clean_keyword += char.upper()
+    
+    if len(clean_keyword) == 0:
+            print ("Keyword must contain letters ")
+            return 
+        
+    for i in range (len(clean_message)):
+        keyword_letter = clean_keyword [i % len(clean_keyword)] #repeats the keyword when message is longer
+        message_index = alphabet.index(clean_message[i]) #position of message letter
+        keyword_index = alphabet.index (keyword_letter) #position of keyword letter
+        new_index = (message_index + keyword_index) % 26 #shifts the message letter by the keywod val
+        new_letter = alphabet [new_index]
+        encrypted += new_letter
+        
+    print ("Encrypted Message: " + encrypted)
+
+def vigenere_decrypt():
+    decrypted = ""
+    clean_keyword = ""
+    
+    for char in keyword:
+        if char.isalpha():
+            clean_keyword += char.upper()
+    
+    if len(clean_keyword) == 0:
+            print ("Keyword must contain letters ")
+            return 
+    for i in range (len(clean_message)):
+        keyword_letter = clean_keyword [i % len(clean_keyword)]
+   
+        message_index = alphabet.index(clean_message[i])
+        keyword_index = alphabet.index (keyword_letter)
+        new_index = (message_index - keyword_index) % 26 #subtracts the keyword shift to recover the original letter
+        new_letter = alphabet [new_index]
+        decrypted += new_letter
+        
+    print ("Decrypted Message: " + decrypted)
+
+#scytale function 
+def scytale_encrypt ():
+    encrypted = ""
+    rows = height 
+    columns = len(clean_message) // height #calculates how many columns are needed
+    
+    if len(clean_message) % height != 0:
+        columns += 1
+    
+    grid = [] #creats 2D grid to store message 
+    index = 0 
+    
+    for row in range (rows):
+        row_list = []
+        for col in range (columns):
+            if index < len (clean_message):
+                row_list.append(clean_message[index])
+                index += 1
+            else: 
+                row_list.append("@")
+        grid.append(row_list)
+    
+    for col in range (columns):
+        for row in range (rows):
+            encrypted += grid [row][col] #reads gird to produce cipher text
+    
+    print ("Encrypted Message: " + encrypted)
+
+
+def scytale_decrypt ():
+    decrypted = ""
+    rows = height 
+    columns = len(clean_message) // height
+    
+    if len(clean_message) % height != 0:
+        columns += 1
+    
+    grid = [["@" for col in range (columns)] for row in range (rows)]
+    index = 0 
+    
+    for col in range (columns):
+        for row in range (rows):
+            if index < len (clean_message):
+                grid [row][col] = clean_message [index] #fills the grid with encrypted text
+                index += 1
+    
+    for row in range (rows):
+        for col in range (columns):
+            decrypted += grid[row][col] #reads the grid to recover the original message 
+    
+    print ("Decrypted Message: " + decrypted)
+
+#input to ask the user
+message = input("Enter your message (either encrypted or decrypted): ")
+print("")
+
+ask = input ("Type 'encrypt' if you wish to encrypt the message or 'decrypt' if you wish to decrypt the message: ").lower()
+print("")
+
+#cleans the message
+clean_message = ""
+
+for char in message: 
+    if char.isalpha():
+     
+        clean_message += char.upper()
+
+print ("Cleaned message: "+ clean_message )
+
+cipher = input ("Which cipher do you want to use, \n A) Scytale Cipher \n B) Caesar Cipher \n C) Vigenere Cipher \n ").upper()
+print("")
+
+#all the cipher rules and conditions
+if cipher == "A":
+    height = int(input("What is the height you want? "))
+    if ask == "encrypt":
+        scytale_encrypt()
+    elif ask == "decrypt":
+        scytale_decrypt()
+    
+elif cipher == "B":
+    offset = int (input ("What offset do you prefer? "))
+    if ask == "encrypt":
+        caesar_encrypt()
+    elif ask == "decrypt":
+        caesar_decrypt()
+    
+elif cipher == "C":
+    keyword = input ("What is your keyword? ")
+    if ask == "encrypt":
+        vigenere_encrypt()
+    elif ask == "decrypt":
+        vigenere_decrypt()
+    
+else:
+    print ("I don't understand, please pick one of the options above")</script>
+<script type="text/plain" id="src-sorting.py">"""
+this program that sorts an input file using different sorting algorithms.
+Avani Lakhotia
+11/06
+"""
+import time
+
+#asks for the user input
+question = input("What sorting algorithm do you wish to use? \n  a) Bubble Sort  \n  b) Selection Sort \n  c) Counting Sort \n  d) Quick Sort \n(select one of the options): ")
+print(" ")
+file = input("Which input file do you wish to use? \n  a) 1 \n  b) 2 \n  c) 3 \n(Select one of the options): ")
+print("")
+
+#opens the input files for reading and the output files for writing
+if file == "1" or file.lower() == "a":
+    f = open("input1.txt" , "r")
+elif file == "2" or file.lower() == "b" :
+    f = open("input2.txt" , "r")
+elif file == "3" or file.lower() == "c" :
+    f = open("input3.txt" , "r")
+else:
+    print("Select a valid option")
+    exit()
+
+
+data = f.read().replace (",", " ").split()
+my_array = [int(x) for x in data]
+f.close()
+
+#print(my_array)
+
+
+#defines each of the sorts
+
+#bubble sort
+def bubble_sort ():
+    n = len(my_array)
+    for i in range (n-1):
+        swapped = False
+        for j in range (n-i-1):
+            if my_array [j] > my_array [j+1]:
+                my_array[j], my_array [j+1] = my_array [j+1], my_array[j]
+                swapped = True
+        if not swapped:
+            break
+    print(my_array)
+    return my_array
+
+#selection sort
+def selection_sort ():
+    n = len(my_array)
+    for i in range (n-1):
+        min_index = i
+        for j in range (i+1, n):
+            if my_array[j] < my_array [min_index]:
+                min_index = j
+        my_array [i], my_array [min_index] = my_array [min_index], my_array [i]
+    return my_array
+
+
+#counting sort
+def counting_sort ():
+    if not my_array:
+        return my_array
+
+    max_val = max (my_array)
+    count = [0] * (max_val + 1 )
+
+    for num in my_array:
+        count [num] +=1
+    sorted_list = []
+
+    for num, freq in enumerate (count):
+        sorted_list.extend ([num] * freq)
+    return sorted_list
+
+#quick sort
+def partition (array, low, high):
+    pivot = array [high]
+    i = low-1
+
+    for j in range (low, high):
+        if array [j] <= pivot:
+            i += 1
+            array [i], array[j] = array [j], array [i]
+    array [i+1], array [high] = array [high], array [i+1]
+    return i + 1
+
+def quick_sort (array, low = 0, high = None):
+    if high is None:
+        high = len(array) -1
+
+    if low < high:
+        pivot_index = partition (array, low, high)
+        quick_sort (array, low, pivot_index-1)
+        quick_sort (array, pivot_index+1, high)
+
+    return array
+
+
+#timer
+timer_start= time.time_ns()
+
+#decides which output to print according to the user
+if question.lower () == "a":
+    #print("Calling Bubble Sort")
+    sorted_array = bubble_sort()
+    print ("Bubble Sort printed to output!")
+    algorithm = "Bubble Sort"
+
+elif question.lower() == "b":
+    #print("Calling Selection Sort")
+    sorted_array = selection_sort()
+    print ("Selection Sort printed to output!")
+    algorithm = "Selection Sort"
+
+elif question.lower () == "c":
+    sorted_array = counting_sort()
+    print ("Counting Sort printed to output!")
+    algorithm = "Counting Sort"
+
+elif question.lower () == "d":
+    sorted_array = quick_sort( my_array)
+    print ("Quick Sort printed to output!")
+    algorithm = "Quick Sort"
+
+else:
+    ("Invalid option, please select one of the options")
+
+#end the time
+timer_end = time.time_ns()
+
+#calculate the difference
+elapsed_time= timer_end - timer_start
+
+#print to console
+print()
+print (f"\nSorted using {algorithm}: ")
+print("")
+print (sorted_array)
+print("")
+print (f"Time taken: {elapsed_time} nanoseconds")
+print("")
+print ("Sorted Output printed to output.txt! ")
+
+with open("output.txt" , "w") as output:
+    output.write(f"Sorted using {algorithm}: \n")
+    output.write ( ",".join (map(str, sorted_array)) + "\n")
+    output.write (f"Time taken for sorting: {elapsed_time} nanoseconds\n")
+</script>
+<script type="text/plain" id="src-bingo.py">"""
+this is a program simulating a simplified bingo card game, it will read a file containing drawn numbers and the bingo cards, it will mark the numbers as they are drawn and then write all the winning cards to the output file!
+Avani Lakhotia
+11/01/2025
+"""
+#reads the input file and returns drawn numbers and boards
+
+with open("input.txt", "r") as f:
+    content = f.read().strip().split("\n\n")
+
+#analyzes the drawn numbers
+numbers_drawn = [int(n) for n in content [0].split (",")]
+
+#get bingo cards into 2D lists
+cards = []
+for block in content [1:]:
+    card= []
+    for line in block.strip().split("\n"):
+        card.append ([int(x) for x in line.split ()])
+    cards.append(card)
+
+mark = [[[False]*5 for _ in range (5)] for _ in cards ]
+
+def mark_num (cards, mark, number):
+    for c in range (len(cards)):
+        for i in range (5):
+            for j in range (5):
+                if cards [c][i][j]== number:
+                    mark [c][i][j] = True
+
+#returns True if a card has a full row or colomn marked true
+def win (mark):
+    #checks rows
+    for row in mark:
+        if all (row):
+            return True
+    #checks coloumn
+    for col in range (5):
+        if all (row[col] for row in mark):
+            return True
+
+    return False
+
+#simulates the game
+winners = []
+
+for number in numbers_drawn:
+    mark_num(cards,mark,number)
+    for c in range (len(cards)):
+        if win(mark [c]) and c not in winners:
+            winners.append(c)
+
+
+with open("win.txt", "w")as f:
+    for w in winners:
+        card_text = "\n".join(" ".join(f"{n:2}"for n in row) for row in cards [w])
+        f.write(card_text + "\n\n")
+
+print("Your bingo is complete, all the winners are printed to win.txt")
+</script>
+<script type="text/plain" id="src-nim.py">'''
+this project [NIM] is a game where you assign a number of items into 3 piles and 2 players take items out from each item turn wise, the person who takes the last item loses.
+Name: Avani Lakhotia 
+Date: 09/28/25
+'''
+#intro 
+print ("This is a game where you assign a number of items into 3 piles and 2 players take items out from each item turn wise, the person who takes the last item loses.")
+print("")
+print("")
+
+#setting up the piles
+
+#pile 1
+while True:
+    try: 
+        pile_1 = int(input("How many items in pile one? (select a number from 1-10): "))
+    except ValueError: 
+        print ("Write a number")
+        continue
+    
+    if 1 <= pile_1 <= 10: 
+        break
+    else:
+        print("Select a number between 1-10.")
+#pile 2    
+while True:
+    try: 
+        pile_2 = int(input("How many items in pile two? (select a number from 1-10): "))
+    except ValueError: 
+        print ("Write a number")
+        continue
+    if 1 <= pile_2 <= 10: 
+        break
+    else:
+        print("Select a number between 1-10.")
+#pile 3   
+while True:    
+    try:
+        pile_3 = int(input("How many items in pile three? (select a number from 1-10): "))
+    except ValueError: 
+        print ("Write a number")
+        continue
+    if 1 <= pile_3 <= 10: 
+        break
+    else:
+        print("Select a number between 1-10.")
+    
+stillPlaying = True
+
+
+#start of the game
+while stillPlaying: 
+    print("")
+    print("Current items in each piles:")
+    print("Pile 1: " + str(pile_1))
+    print("Pile 2: " + str(pile_2))
+    print("Pile 3: " + str(pile_3))
+    
+    #player 1
+    print("")
+    print("It is player 1's turn!")
+    while True: 
+        #fixes the error when someone puts in a ltter instead of number
+        try: 
+            player_1 = int(input("How many items do you want to remove? "))
+            player_1_pile = int(input("From which pile do you want to remove (1,2 or 3)? "))
+            print("")
+        except ValueError: 
+            print ("Please put in a number")
+            continue
+            
+        if player_1 < 1:
+            print("You must remove at least 1 item.")
+            continue
+
+        if player_1_pile == 1:
+            if player_1 <= pile_1: 
+                pile_1 = int(pile_1)- int(player_1)
+                print("There are " + str(pile_1) + " left in pile 1.")
+                #adding the loses clause here stops game immediately
+                if pile_1 == 0 and pile_2 == 0 and pile_3 == 0:
+                    print("Player 1 took the last item.")
+                    print("Player 1 loses")
+                    stillPlaying = False
+                break
+            else:
+                print("Pick a lower number or choose from a pile that's not empty.")
+        
+        elif player_1_pile == 2:
+            if player_1 <= pile_2: 
+                pile_2 = int(pile_2)- int(player_1)
+                print("There are " + str(pile_2) + " left in pile 2.")
+                 #adding the loses clause here stops game immediately
+                if pile_1 == 0 and pile_2 == 0 and pile_3 == 0:
+                    print("Player 1 took the last item.")
+                    print("Player 1 loses")
+                    stillPlaying = False
+                break
+            else: 
+                print("Pick a lower number or choose from a pile that's not empty.")
+         
+        elif player_1_pile == 3:
+            if player_1 <= pile_3: 
+                pile_3 = int(pile_3)- int(player_1)
+                print("There are " + str(pile_3) + " left in pile 3.")
+                 #adding the loses clause here stops game immediately
+                if pile_1 == 0 and pile_2 == 0 and pile_3 == 0:
+                    print("Player 1 took the last item.")
+                    print("Player 1 loses")
+                    stillPlaying = False
+                break
+            else: 
+                print("Pick a lower number or choose from a pile that's not empty.")
+        
+        
+    
+    if not stillPlaying:
+        break
+
+    #player 2
+    print("")
+    print("It is player 2's turn!")
+    
+    while True: 
+        #fixes value error
+        try: 
+            player_2 = int(input("How many items do you want to remove? "))
+            player_2_pile = int(input("From which pile do you want to remove (1,2 or 3)? "))
+            print("")
+            
+        except ValueError: 
+            print ("Please put in a number")
+            continue
+        
+        if player_2 < 1:
+            print("You must remove at least 1 item.")
+            continue
+        if player_2_pile == 1:
+            if player_2 <= pile_1: 
+                pile_1 = int(pile_1)- int(player_2)
+                print("There are " + str(pile_1) + " left in pile 1.")
+                 #adding the loses clause here stops game immediately
+                if pile_1 == 0 and pile_2 == 0 and pile_3 == 0:
+                    print("Player 2 took the last item.")
+                    print("Player 2 loses")
+                    stillPlaying = False
+                break
+            else: 
+                print("Pick a lower number or choose from a pile that's not empty.")
+        
+        elif player_2_pile == 2:
+            if player_2 <= pile_2: 
+                pile_2 = int(pile_2)- int(player_2)
+                print("There are " + str(pile_2) + " left in pile 2.")
+                 #adding the loses clause here stops game immediately
+                if pile_1 == 0 and pile_2 == 0 and pile_3 == 0:
+                    print("Player 2 took the last item.")
+                    print("Player 2 loses")
+                    stillPlaying = False
+                break
+            else: 
+                print("Pick a lower number or choose from a pile that's not empty.")
+         
+        elif player_2_pile == 3:
+            if player_2 <= pile_3: 
+                pile_3 = int(pile_3)- int(player_2)
+                print("There are " + str(pile_3) + " left in pile 3.")
+                 #adding the loses clause here stops game immediately
+                if pile_1 == 0 and pile_2 == 0 and pile_3 == 0:
+                    print("Player 2 took the last item.")
+                    print("Player 2 loses")
+                    stillPlaying = False
+                break
+            else: 
+                print("Pick a lower number or choose from a pile that's not empty.")</script>
+
+
+<script>
+/* Paste the live address of the SkillsUSA Oregon site between the quotes, for example "https://example.com". Leave it empty until you have one. */
+var SKILLSUSA_URL = "";
+</script>
+
+<script>
+(function () {
+  /* SkillsUSA link */
+  var box = document.getElementById('skills-actions');
+  if (SKILLSUSA_URL) {
+    var a = document.createElement('a');
+    a.className = 'btn primary'; a.href = SKILLSUSA_URL; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = 'Open site ↗';
+    box.appendChild(a);
+  } else {
+    var s = document.createElement('span');
+    s.className = 'btn off'; s.textContent = 'Link coming soon';
+    box.appendChild(s);
+  }
+
+  /* Source panels */
+  function text(id) { return document.getElementById(id).textContent; }
+  Array.prototype.forEach.call(document.querySelectorAll('code[data-src]'), function (el) { el.textContent = text(el.getAttribute('data-src')); });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.copy'), function (btn) {
+    btn.addEventListener('click', function () {
+      var src = text(btn.getAttribute('data-src'));
+      var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
+      var fallback = function () {
+        var pre = btn.closest('.code').querySelector('pre');
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        btn.textContent = 'Press Ctrl+C';
+      };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(src).then(done, fallback);
+        } else { fallback(); }
+      } catch (e) { fallback(); }
+    });
+  });
+
+  /* Palindrome demo (same steps as the C++ program) */
+  var pin = document.getElementById('pal-input');
+  var pclean = document.getElementById('pal-clean');
+  var pverd = document.getElementById('pal-verdict');
+  function checkPal() {
+    var cleaned = pin.value.slice(0, 80).replace(/[^A-Za-z0-9]/g, '').toLowerCase();
+    var backwards = cleaned.split('').reverse().join('');
+    pclean.textContent = 'cleaned: "' + cleaned + '"';
+    if (cleaned === backwards) { pverd.textContent = 'Palindrome.'; pverd.className = 'verdict yes'; }
+    else { pverd.textContent = 'Not a palindrome.'; pverd.className = 'verdict no'; }
+  }
+  pin.addEventListener('input', checkPal);
+  checkPal();
+
+  /* Tic tac toe demo */
+  var boardEl = document.getElementById('ttt-board');
+  var statusEl = document.getElementById('ttt-status');
+  var scoreEl = document.getElementById('ttt-score');
+  var againBtn = document.getElementById('ttt-again');
+  var rows = ['a', 'b', 'c'];
+  var board, player, over, scores = { X: 0, O: 0, ties: 0 };
+  var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  var cells = [];
+
+  (function build() {
+    var corner = document.createElement('span'); boardEl.appendChild(corner);
+    [1, 2, 3].forEach(function (n) {
+      var h = document.createElement('span'); h.className = 'axis'; h.textContent = n; boardEl.appendChild(h);
+    });
+    for (var r = 0; r < 3; r++) {
+      var lab = document.createElement('span'); lab.className = 'axis'; lab.textContent = rows[r]; boardEl.appendChild(lab);
+      for (var c = 0; c < 3; c++) {
+        (function (i, r, c) {
+          var b = document.createElement('button');
+          b.type = 'button'; b.className = 'cell';
+          b.setAttribute('aria-label', 'Row ' + rows[r] + ', column ' + (c + 1));
+          b.addEventListener('click', function () { play(i); });
+          boardEl.appendChild(b); cells.push(b);
+        })(r * 3 + c, r, c);
+      }
+    }
+  })();
+
+  function renderScore() {
+    scoreEl.innerHTML = '<span>X wins: ' + scores.X + '</span><span>O wins: ' + scores.O + '</span><span>Ties: ' + scores.ties + '</span>';
+  }
+  function reset() {
+    board = [null, null, null, null, null, null, null, null, null];
+    player = 'X'; over = false;
+    cells.forEach(function (b) { b.textContent = ''; b.disabled = false; b.className = 'cell'; });
+    statusEl.textContent = 'Player X, pick a square.';
+    againBtn.hidden = true;
+    renderScore();
+  }
+  function winLine(p) {
+    for (var i = 0; i < LINES.length; i++) {
+      var l = LINES[i];
+      if (board[l[0]] === p && board[l[1]] === p && board[l[2]] === p) return l;
+    }
+    return null;
+  }
+  function play(i) {
+    if (over || board[i]) return;
+    board[i] = player;
+    cells[i].textContent = player;
+    cells[i].classList.add(player === 'X' ? 'x' : 'o');
+    cells[i].disabled = true;
+    var line = winLine(player);
+    if (line) {
+      line.forEach(function (k) { cells[k].classList.add('win'); });
+      statusEl.textContent = 'Player ' + player + ' wins!';
+      scores[player]++; over = true;
+    } else if (board.every(function (v) { return v; })) {
+      statusEl.textContent = "It's a tie!";
+      scores.ties++; over = true;
+    } else {
+      player = player === 'X' ? 'O' : 'X';
+      statusEl.textContent = 'Player ' + player + ', pick a square.';
+    }
+    if (over) {
+      cells.forEach(function (b) { b.disabled = true; });
+      againBtn.hidden = false; againBtn.focus();
+    }
+    renderScore();
+  }
+  againBtn.addEventListener('click', reset);
+  reset();
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+
+  function mk(id, html) {
+    var box = document.getElementById(id);
+    if (!box) return null;
+    box.innerHTML = '<p class="demo-title">try it here</p>' + html +
+      '<p class="note">This is a JavaScript version of the program so you can play it in the browser. The original is in the code.</p>';
+    box.q = function (s) { return box.querySelector(s); };
+    return box;
+  }
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; });
+  }
+  function canvasXY(cv, e) {
+    var r = cv.getBoundingClientRect();
+    return { x: Math.floor((e.clientX - r.left) * cv.width / r.width), y: Math.floor((e.clientY - r.top) * cv.height / r.height) };
+  }
+
+  /* ---------- World of Zuul: Luxury Mall ---------- */
+  (function () {
+    var b = mk('demo-zuul',
+      '<div class="term" data-r="log" aria-live="polite" tabindex="0"></div>' +
+      '<form class="row" data-r="form"><input type="text" data-r="in" aria-label="Command" placeholder="try: go north" autocomplete="off" autocapitalize="none" spellcheck="false" style="flex:1 1 9rem">' +
+      '<button class="mini" type="submit">Enter</button><button class="mini" type="button" data-r="restart">Restart</button></form>');
+    if (!b) return;
+    var q = b.q, log = q('[data-r=log]'), inp = q('[data-r=in]');
+    var D = {
+      basement: 'in the basement of the mall, surrounded by cars coming in and out',
+      entrance: 'at the entrance of the mall, the glass gates open, and shoppers rush in and out',
+      gucci: 'inside Gucci, filled with luxury displays, polished floors',
+      prada: 'inside Prada, where air smells faintly of leather and perfume',
+      louis: 'inside Louis Vuitton, surrounded by patterned handbags, shoes, and soft lighting',
+      dior: 'inside Dior, glowing with elegance, mirrors everywhere',
+      chanel: 'inside Chanel, decorated in black and white, glass case displaying perfumes and jewelry',
+      balenciaga: 'inside Balenciaga, with modern designs, bold colors',
+      versace: 'inside Versace, dramatic lighting and edgy fashion statements',
+      burberry: 'inside Burberry, featuring classic coats',
+      rolex: 'inside Rolex, luxury watches in those glass cases all around the store',
+      cartier: 'inside Cartier, sparkling with diamonds and gold jewelry',
+      tiffany: 'inside Tiffany & Co., glowing with the blue decor and shining gemstones',
+      food: 'inside Food Court, filled with the smell of pizza, burgers, and fries',
+      theatre: 'inside theatre, dim lighting, rows of seating and a massive screen waiting for the movie to begin.'
+    };
+    var X = {
+      basement: { north: 'entrance' },
+      entrance: { north: 'gucci', south: 'basement' },
+      gucci: { west: 'louis', east: 'prada' },
+      louis: { east: 'gucci', north: 'versace' },
+      prada: { north: 'chanel', west: 'gucci' },
+      dior: { north: 'tiffany', west: 'chanel' },
+      chanel: { west: 'balenciaga', east: 'dior', south: 'prada' },
+      balenciaga: { west: 'versace', east: 'chanel', north: 'rolex' },
+      versace: { east: 'balenciaga', north: 'burberry' },
+      burberry: { east: 'rolex', south: 'versace' },
+      rolex: { east: 'cartier', west: 'burberry', south: 'balenciaga' },
+      cartier: { east: 'tiffany', west: 'rolex', north: 'food' },
+      tiffany: { west: 'cartier' },
+      food: { west: 'theatre', south: 'cartier' },
+      theatre: {}
+    };
+    var items, inv, cur, done;
+    function out(t, cls) {
+      var d = document.createElement('div'); if (cls) d.className = cls; d.textContent = t;
+      log.appendChild(d); log.scrollTop = log.scrollHeight;
+    }
+    function longDesc(k) {
+      var s = 'You are ' + D[k] + '.\nExits:';
+      Object.keys(X[k]).forEach(function (d) { s += ' ' + d; });
+      s += '.\n';
+      s += items[k].length ? 'Items in this room: ' + items[k].join(', ') : 'There are no items in the room.';
+      return s;
+    }
+    function helpText() {
+      return "Your goal is to get to the theatre and grab a pizza\nInstructions:\n 1) To go in a direction type 'go [your direction]'\n 2) To grab an item type 'grab [item name]'\n 3) To drop an item type 'drop [item name]'\n 4) To check your inventory type 'inventory'\n 5) If you need help with anything else simply type 'help'\nYour command words are:\ngo  quit  help  grab  drop  inventory";
+    }
+    function start() {
+      log.textContent = '';
+      items = { rolex: ['watch'], food: ['pizza'], dior: ['lip Oil'], chanel: ['perfume'], prada: ['bag'] };
+      Object.keys(D).forEach(function (k) { if (!items[k]) items[k] = []; });
+      inv = []; cur = 'entrance'; done = false; inp.disabled = false;
+      out('Welcome to Luxury Mall!\nLuxury Mall is a new, incredibly adventurous game.\nYou want to watch a movie so your job is to get to the theatre but also remember to grab a pizza slice.');
+      out(helpText());
+      out(longDesc(cur));
+    }
+    function run(line) {
+      out('> ' + line, 'you');
+      var w = line.trim().split(/\s+/).filter(Boolean), c = w[0] || null, s = w[1] || null;
+      if (['go', 'quit', 'help', 'grab', 'drop', 'inventory'].indexOf(c) < 0) { out("I don't know what you mean..."); return; }
+      if (c === 'help') { out(helpText()); }
+      else if (c === 'inventory') { out(inv.length ? 'You have: ' + inv.join(', ') : 'Your inventory is empty'); }
+      else if (c === 'grab') {
+        if (!s) { out('Grab what?'); return; }
+        var i = items[cur].indexOf(s);
+        if (i >= 0) { items[cur].splice(i, 1); inv.push(s); out('You picked up the ' + s + '.'); }
+        else out('There is no ' + s + ' here.');
+      } else if (c === 'drop') {
+        if (!s) { out('Drop what?'); return; }
+        var j = inv.indexOf(s);
+        if (j >= 0) { inv.splice(j, 1); items[cur].push(s); out('You have dropped the ' + s + '.'); }
+        else out("You don't have a " + s + '.');
+      } else if (c === 'go') {
+        if (!s) { out('Go where?'); return; }
+        var n = X[cur][s];
+        if (!n) { out('There is no door!'); return; }
+        if (n === 'theatre') {
+          if (inv.indexOf('pizza') < 0) { out("You can't enter the theatre, you need the pizza! "); return; }
+          cur = n; out(longDesc(cur)); out('Congratulations! You have arrived at the Theatre\nenjoy your movie!');
+          done = true; inp.disabled = true; return;
+        }
+        cur = n; out(longDesc(cur));
+      } else if (c === 'quit') {
+        if (s) { out('Quit what?'); return; }
+        out('Thank you for playing. Good bye.'); done = true; inp.disabled = true;
+      }
+    }
+    q('[data-r=form]').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (done) return;
+      var v = inp.value; inp.value = '';
+      if (v.trim()) run(v);
+    });
+    q('[data-r=restart]').addEventListener('click', function () { start(); inp.focus(); });
+    start();
+  })();
+
+  /* ---------- Conway's Game of Life ---------- */
+  (function () {
+    var b = mk('demo-life',
+      '<canvas class="dc" width="500" height="500" data-r="cv" aria-label="Life grid. Click cells to switch them on or off."></canvas>' +
+      '<div class="row"><button class="mini" type="button" data-r="step">Step</button><button class="mini" type="button" data-r="go">Start</button>' +
+      '<button class="mini" type="button" data-r="clear">Clear</button><button class="mini" type="button" data-r="rand">Random</button></div>');
+    if (!b) return;
+    var q = b.q, cv = q('[data-r=cv]'), ctx = cv.getContext('2d');
+    var ROWS = 25, COLS = 25, S = 20, running = false, timer = null, grid;
+    function empty() { var g = []; for (var r = 0; r < ROWS; r++) { g.push([]); for (var c = 0; c < COLS; c++) g[r].push(false); } return g; }
+    function glider() { grid = empty(); [[1, 2], [2, 3], [3, 1], [3, 2], [3, 3]].forEach(function (p) { grid[p[0]][p[1]] = true; }); }
+    function draw() {
+      ctx.fillStyle = '#FFFCF7'; ctx.fillRect(0, 0, cv.width, cv.height);
+      for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++) {
+        if (grid[r][c]) { ctx.fillStyle = '#B5655A'; ctx.fillRect(c * S, r * S, S, S); }
+        ctx.strokeStyle = '#EBE0CE'; ctx.lineWidth = 1; ctx.strokeRect(c * S + 0.5, r * S + 0.5, S, S);
+      }
+    }
+    function nb(row, col) {
+      var n = 0;
+      for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++) {
+        if (!dr && !dc) continue;
+        var r = row + dr, c = col + dc;
+        if (r >= 0 && r < ROWS && c >= 0 && c < COLS && grid[r][c]) n++;
+      }
+      return n;
+    }
+    function step() {
+      var g = empty();
+      for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++) {
+        var n = nb(r, c);
+        g[r][c] = grid[r][c] ? (n === 2 || n === 3) : n === 3;
+      }
+      grid = g; draw();
+    }
+    function loop() { if (running) { step(); timer = setTimeout(loop, 200); } }
+    function setRun(on) {
+      running = on; clearTimeout(timer); q('[data-r=go]').textContent = on ? 'Stop' : 'Start';
+      if (on) loop();
+    }
+    cv.addEventListener('click', function (e) {
+      var p = canvasXY(cv, e), c = Math.floor(p.x / S), r = Math.floor(p.y / S);
+      if (r >= 0 && r < ROWS && c >= 0 && c < COLS) { grid[r][c] = !grid[r][c]; draw(); }
+    });
+    q('[data-r=step]').addEventListener('click', step);
+    q('[data-r=go]').addEventListener('click', function () { setRun(!running); });
+    q('[data-r=clear]').addEventListener('click', function () { setRun(false); grid = empty(); draw(); });
+    q('[data-r=rand]').addEventListener('click', function () {
+      grid = empty(); for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++) grid[r][c] = Math.random() < 0.28; draw();
+    });
+    glider(); draw();
+  })();
+
+  /* ---------- Sudoku ---------- */
+  (function () {
+    var b = mk('demo-sudoku',
+      '<div class="row" data-r="lv"></div><div class="sgrid" data-r="grid"></div>' +
+      '<p class="note">Tap a cell, then use the number buttons to cross off digits you have ruled out for it.</p>' +
+      '<div class="row" data-r="nums" role="group" aria-label="Possible numbers"></div>' +
+      '<div class="row"><button class="mini" type="button" data-r="check">Check</button></div><p class="status" data-r="msg" aria-live="polite"></p>');
+    if (!b) return;
+    var q = b.q, gridEl = q('[data-r=grid]'), msg = q('[data-r=msg]');
+    var cells = [], given = [], poss = [], sel = null, GIVENS = { easy: 40, medium: 32, hard: 25 };
+    function newSolution() {
+      var perm = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+      function order() { var o = []; shuffle([0, 1, 2]).forEach(function (bd) { shuffle([0, 1, 2]).forEach(function (i) { o.push(bd * 3 + i); }); }); return o; }
+      var ro = order(), co = order(), g = [];
+      for (var r = 0; r < 9; r++) { g.push([]); for (var c = 0; c < 9; c++) g[r].push(perm[(3 * (ro[r] % 3) + Math.floor(ro[r] / 3) + co[c]) % 9]); }
+      return g;
+    }
+    function newGame(level) {
+      var sol = newSolution(), keep = shuffle(Array.apply(null, { length: 81 }).map(function (_, i) { return i; })).slice(0, GIVENS[level]);
+      var set = {}; keep.forEach(function (k) { set[k] = 1; });
+      sel = null; msg.textContent = ''; poss = [];
+      for (var r = 0; r < 9; r++) { poss.push([]); given[r] = []; for (var c = 0; c < 9; c++) {
+        poss[r].push([true, true, true, true, true, true, true, true, true]);
+        var el = cells[r][c], isG = !!set[r * 9 + c]; given[r][c] = isG;
+        el.value = isG ? sol[r][c] : ''; el.readOnly = isG; el.className = isG ? 'g' : ''; borders(el, r, c);
+      } }
+      updNums(); levels(level);
+    }
+    function borders(el, r, c) { if (c % 3 === 2 && c < 8) el.classList.add('bR'); if (r % 3 === 2 && r < 8) el.classList.add('bB'); }
+    function select(r, c) {
+      if (sel) cells[sel[0]][sel[1]].classList.remove('sel');
+      sel = [r, c]; cells[r][c].classList.add('sel'); updNums();
+    }
+    for (var r = 0; r < 9; r++) { cells.push([]); for (var c = 0; c < 9; c++) (function (r, c) {
+      var el = document.createElement('input'); el.type = 'text'; el.inputMode = 'numeric'; el.autocomplete = 'off';
+      el.setAttribute('aria-label', 'Row ' + (r + 1) + ', column ' + (c + 1));
+      el.addEventListener('focus', function () { select(r, c); });
+      el.addEventListener('click', function () { select(r, c); });
+      el.addEventListener('input', function () { el.value = el.value.replace(/[^1-9]/g, '').slice(-1); el.classList.remove('bad'); });
+      gridEl.appendChild(el); cells[r].push(el);
+    })(r, c); }
+    var numsEl = q('[data-r=nums]'), nbtn = [];
+    for (var n = 1; n <= 9; n++) (function (n) {
+      var bt = document.createElement('button'); bt.type = 'button'; bt.className = 'mini sm'; bt.textContent = n;
+      bt.addEventListener('click', function () {
+        if (!sel) return; var p = poss[sel[0]][sel[1]]; p[n - 1] = !p[n - 1]; updNums();
+      });
+      numsEl.appendChild(bt); nbtn.push(bt);
+    })(n);
+    function updNums() {
+      nbtn.forEach(function (bt, i) {
+        var off = sel && !poss[sel[0]][sel[1]][i];
+        bt.classList.toggle('off', !!off); bt.setAttribute('aria-pressed', off ? 'false' : 'true');
+      });
+    }
+    function levels(cur) {
+      var lv = q('[data-r=lv]'); lv.innerHTML = '';
+      ['easy', 'medium', 'hard'].forEach(function (l) {
+        var bt = document.createElement('button'); bt.type = 'button'; bt.className = 'mini' + (l === cur ? ' on' : ''); bt.textContent = l;
+        bt.addEventListener('click', function () { newGame(l); }); lv.appendChild(bt);
+      });
+    }
+    q('[data-r=check]').addEventListener('click', function () {
+      var v = [], empty = 0, bad = 0, r, c;
+      for (r = 0; r < 9; r++) { v.push([]); for (c = 0; c < 9; c++) { var x = parseInt(cells[r][c].value, 10) || 0; v[r].push(x); if (!x) empty++; } }
+      for (r = 0; r < 9; r++) for (c = 0; c < 9; c++) {
+        cells[r][c].classList.remove('bad'); if (!v[r][c]) continue;
+        var dup = false;
+        for (var k = 0; k < 9 && !dup; k++) {
+          if (k !== c && v[r][k] === v[r][c]) dup = true;
+          if (k !== r && v[k][c] === v[r][c]) dup = true;
+          var rr = Math.floor(r / 3) * 3 + Math.floor(k / 3), cc = Math.floor(c / 3) * 3 + (k % 3);
+          if ((rr !== r || cc !== c) && v[rr][cc] === v[r][c]) dup = true;
+        }
+        if (dup) { bad++; cells[r][c].classList.add('bad'); }
+      }
+      msg.textContent = bad ? 'Some numbers repeat in a row, column or box. They are shown in red.' : (empty ? 'No repeats so far. ' + empty + ' cells left.' : 'you win!!');
+    });
+    newGame('easy');
+  })();
+
+  /* ---------- Flood Fill ---------- */
+  (function () {
+    var b = mk('demo-floodfill',
+      '<canvas class="dc" width="350" height="300" data-r="cv" aria-label="Picture to color. Click a region to fill it."></canvas>' +
+      '<div class="row" data-r="sw" role="group" aria-label="Colors"></div>' +
+      '<div class="row"><label>Red <input type="number" min="0" max="255" value="232" data-r="r" class="num"></label>' +
+      '<label>Green <input type="number" min="0" max="255" value="150" data-r="g" class="num"></label>' +
+      '<label>Blue <input type="number" min="0" max="255" value="140" data-r="b" class="num"></label>' +
+      '<span class="swatch" data-r="prev" aria-hidden="true"></span><button class="mini" type="button" data-r="reset">Reset</button></div>');
+    if (!b) return;
+    var q = b.q, cv = q('[data-r=cv]'), ctx = cv.getContext('2d');
+    var rI = q('[data-r=r]'), gI = q('[data-r=g]'), bI = q('[data-r=b]'), prev = q('[data-r=prev]');
+    function scene() {
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, 350, 300);
+      ctx.strokeStyle = '#3a3a3a'; ctx.lineWidth = 3; ctx.lineJoin = 'round';
+      ctx.strokeRect(1.5, 230, 347, 68);
+      ctx.strokeRect(90, 140, 120, 90);
+      ctx.beginPath(); ctx.moveTo(80, 140); ctx.lineTo(150, 80); ctx.lineTo(220, 140); ctx.closePath(); ctx.stroke();
+      ctx.strokeRect(135, 180, 30, 50); ctx.strokeRect(100, 155, 25, 25); ctx.strokeRect(175, 155, 25, 25);
+      ctx.beginPath(); ctx.arc(290, 60, 30, 0, 6.2832); ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(60, 55, 42, 18, 0, 0, 6.2832); ctx.stroke();
+      ctx.strokeRect(255, 170, 16, 60);
+      ctx.beginPath(); ctx.arc(263, 140, 34, 0, 6.2832); ctx.stroke();
+      ctx.beginPath(); ctx.arc(30, 265, 12, 0, 6.2832); ctx.stroke();
+      ctx.beginPath(); ctx.arc(62, 276, 12, 0, 6.2832); ctx.stroke();
+    }
+    function rgb() {
+      function cl(el) { var n = parseInt(el.value, 10); return isNaN(n) ? 0 : Math.max(0, Math.min(255, n)); }
+      return [cl(rI), cl(gI), cl(bI)];
+    }
+    function showPrev() { var c = rgb(); prev.style.background = 'rgb(' + c.join(',') + ')'; }
+    function fill(x, y, col) {
+      var W = cv.width, H = cv.height, img = ctx.getImageData(0, 0, W, H), d = img.data, i0 = (y * W + x) * 4;
+      var tr = d[i0], tg = d[i0 + 1], tb = d[i0 + 2];
+      if (Math.abs(tr - col[0]) + Math.abs(tg - col[1]) + Math.abs(tb - col[2]) < 4) return;
+      var seen = new Uint8Array(W * H), stack = [y * W + x]; seen[stack[0]] = 1;
+      function tryAdd(n) {
+        if (seen[n]) return; var k = n * 4;
+        if (Math.abs(d[k] - tr) + Math.abs(d[k + 1] - tg) + Math.abs(d[k + 2] - tb) <= 60) { seen[n] = 1; stack.push(n); }
+      }
+      while (stack.length) {
+        var p = stack.pop(), px = p % W, py = (p - px) / W, k = p * 4;
+        d[k] = col[0]; d[k + 1] = col[1]; d[k + 2] = col[2]; d[k + 3] = 255;
+        if (px > 0) tryAdd(p - 1); if (px < W - 1) tryAdd(p + 1); if (py > 0) tryAdd(p - W); if (py < H - 1) tryAdd(p + W);
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+    cv.addEventListener('click', function (e) {
+      var p = canvasXY(cv, e); if (p.x >= 0 && p.y >= 0 && p.x < cv.width && p.y < cv.height) fill(p.x, p.y, rgb());
+    });
+    [[232, 150, 140], [246, 209, 105], [160, 190, 140], [140, 180, 220], [190, 160, 220], [250, 250, 250]].forEach(function (c) {
+      var bt = document.createElement('button'); bt.type = 'button'; bt.className = 'swatch btn-sw'; bt.style.background = 'rgb(' + c.join(',') + ')';
+      bt.setAttribute('aria-label', 'Use color ' + c.join(', '));
+      bt.addEventListener('click', function () { rI.value = c[0]; gI.value = c[1]; bI.value = c[2]; showPrev(); });
+      q('[data-r=sw]').appendChild(bt);
+    });
+    [rI, gI, bI].forEach(function (el) { el.addEventListener('input', showPrev); });
+    q('[data-r=reset]').addEventListener('click', scene);
+    scene(); showPrev();
+  })();
+
+  /* ---------- Cipher Tool ---------- */
+  (function () {
+    var b = mk('demo-cipher',
+      '<div class="field"><label for="ci-msg">Message</label><textarea id="ci-msg" rows="2">Meet me at the library</textarea></div>' +
+      '<div class="row"><label>Action <select id="ci-act"><option value="encrypt">Encrypt</option><option value="decrypt">Decrypt</option></select></label>' +
+      '<label>Cipher <select id="ci-ciph"><option value="A">Scytale</option><option value="B">Caesar</option><option value="C">Vigenère</option></select></label></div>' +
+      '<div class="field"><label for="ci-par" id="ci-parl">Height</label><input id="ci-par" type="text" value="3" autocomplete="off"></div>' +
+      '<div class="out"><span class="cleaned" id="ci-clean"></span><span class="verdict" id="ci-out"></span></div>');
+    if (!b) return;
+    var A = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var msg = document.getElementById('ci-msg'), act = document.getElementById('ci-act'), ciph = document.getElementById('ci-ciph'),
+      par = document.getElementById('ci-par'), parl = document.getElementById('ci-parl'), cl = document.getElementById('ci-clean'), out = document.getElementById('ci-out');
+    var DEF = { A: ['Height', '3'], B: ['Offset', '3'], C: ['Keyword', 'cake'] };
+    function mod(n, m) { return ((n % m) + m) % m; }
+    function clean(s) { return s.replace(/[^A-Za-z]/g, '').toUpperCase(); }
+    function caesar(m, off, dir) { return m.split('').map(function (ch) { return A[mod(A.indexOf(ch) + dir * off, 26)]; }).join(''); }
+    function vig(m, kw, dir) {
+      var k = clean(kw); if (!k) return null;
+      return m.split('').map(function (ch, i) { return A[mod(A.indexOf(ch) + dir * A.indexOf(k[i % k.length]), 26)]; }).join('');
+    }
+    function scyEnc(m, h) {
+      var cols = Math.ceil(m.length / h), g = [], i = 0, r, c, s = '';
+      for (r = 0; r < h; r++) { g.push([]); for (c = 0; c < cols; c++) g[r].push(i < m.length ? m[i++] : '@'); }
+      for (c = 0; c < cols; c++) for (r = 0; r < h; r++) s += g[r][c];
+      return s;
+    }
+    function scyDec(m, h) {
+      var cols = Math.ceil(m.length / h), g = [], i = 0, r, c, s = '';
+      for (r = 0; r < h; r++) { g.push([]); for (c = 0; c < cols; c++) g[r].push('@'); }
+      for (c = 0; c < cols; c++) for (r = 0; r < h; r++) if (i < m.length) g[r][c] = m[i++];
+      for (r = 0; r < h; r++) for (c = 0; c < cols; c++) s += g[r][c];
+      return s;
+    }
+    function go() {
+      var m = clean(msg.value), dir = act.value === 'encrypt' ? 1 : -1, label = act.value === 'encrypt' ? 'Encrypted Message: ' : 'Decrypted Message: ';
+      cl.textContent = 'Cleaned message: ' + m; var res, n;
+      if (ciph.value === 'A') {
+        n = parseInt(par.value, 10);
+        res = (isNaN(n) || n < 1) ? null : (dir > 0 ? scyEnc(m, n) : scyDec(m, n));
+        if (res === null) { out.textContent = 'Height must be a whole number, 1 or more.'; return; }
+      } else if (ciph.value === 'B') {
+        n = parseInt(par.value, 10);
+        if (isNaN(n)) { out.textContent = 'Offset must be a whole number.'; return; }
+        res = caesar(m, n, dir);
+      } else {
+        res = vig(m, par.value, dir);
+        if (res === null) { out.textContent = 'Keyword must contain letters'; return; }
+      }
+      out.textContent = label + res;
+    }
+    ciph.addEventListener('change', function () { parl.textContent = DEF[ciph.value][0]; par.value = DEF[ciph.value][1]; go(); });
+    [msg, act, par].forEach(function (el) { el.addEventListener('input', go); el.addEventListener('change', go); });
+    go();
+  })();
+
+  /* ---------- Sorting Algorithms ---------- */
+  (function () {
+    var b = mk('demo-sorting',
+      '<div class="field"><label for="so-in">Numbers (whole numbers, separated by commas or spaces)</label><textarea id="so-in" rows="2">34, 7, 23, 32, 5, 62, 32, 7, 19, 3</textarea></div>' +
+      '<div class="row"><label>Sort <select id="so-alg"><option value="a">Bubble Sort</option><option value="b">Selection Sort</option><option value="c">Counting Sort</option><option value="d">Quick Sort</option></select></label>' +
+      '<button class="mini" type="button" id="so-run">Sort</button><button class="mini" type="button" id="so-rand">Random 20</button></div>' +
+      '<div class="out" aria-live="polite"><span class="cleaned" id="so-head"></span><span id="so-res"></span><span class="cleaned" id="so-time"></span></div>');
+    if (!b) return;
+    var NAMES = { a: 'Bubble Sort', b: 'Selection Sort', c: 'Counting Sort', d: 'Quick Sort' };
+    function bubble(a) { var n = a.length; for (var i = 0; i < n - 1; i++) { var sw = false; for (var j = 0; j < n - i - 1; j++) if (a[j] > a[j + 1]) { var t = a[j]; a[j] = a[j + 1]; a[j + 1] = t; sw = true; } if (!sw) break; } return a; }
+    function selection(a) { var n = a.length; for (var i = 0; i < n - 1; i++) { var m = i; for (var j = i + 1; j < n; j++) if (a[j] < a[m]) m = j; var t = a[i]; a[i] = a[m]; a[m] = t; } return a; }
+    function counting(a) { if (!a.length) return a; var mx = Math.max.apply(null, a), c = []; for (var i = 0; i <= mx; i++) c.push(0); a.forEach(function (x) { c[x]++; }); var r = []; c.forEach(function (f, v) { for (var k = 0; k < f; k++) r.push(v); }); return r; }
+    function part(a, lo, hi) { var p = a[hi], i = lo - 1; for (var j = lo; j < hi; j++) if (a[j] <= p) { i++; var t = a[i]; a[i] = a[j]; a[j] = t; } var u = a[i + 1]; a[i + 1] = a[hi]; a[hi] = u; return i + 1; }
+    function quick(a, lo, hi) { if (lo === undefined) { lo = 0; hi = a.length - 1; } if (lo < hi) { var p = part(a, lo, hi); quick(a, lo, p - 1); quick(a, p + 1, hi); } return a; }
+    var inEl = document.getElementById('so-in'), alg = document.getElementById('so-alg'), head = document.getElementById('so-head'), res = document.getElementById('so-res'), tm = document.getElementById('so-time');
+    function run() {
+      var parts = inEl.value.split(/[\s,]+/).filter(Boolean);
+      if (!parts.length || parts.some(function (p) { return !/^\d+$/.test(p); })) { head.textContent = ''; tm.textContent = ''; res.textContent = 'Use whole numbers, 0 or higher.'; return; }
+      var arr = parts.map(Number);
+      if (alg.value === 'c' && Math.max.apply(null, arr) > 100000) { head.textContent = ''; tm.textContent = ''; res.textContent = 'Counting Sort needs numbers up to 100000 here.'; return; }
+      var t0 = performance.now(), out;
+      if (alg.value === 'a') out = bubble(arr.slice()); else if (alg.value === 'b') out = selection(arr.slice());
+      else if (alg.value === 'c') out = counting(arr.slice()); else out = quick(arr.slice());
+      var ns = Math.round((performance.now() - t0) * 1e6);
+      head.textContent = 'Sorted using ' + NAMES[alg.value] + ':'; res.textContent = out.join(', ');
+      tm.textContent = 'Time taken: ' + ns.toLocaleString() + ' nanoseconds (browsers round timers)';
+    }
+    document.getElementById('so-run').addEventListener('click', run);
+    alg.addEventListener('change', run);
+    document.getElementById('so-rand').addEventListener('click', function () {
+      var a = []; for (var i = 0; i < 20; i++) a.push(Math.floor(Math.random() * 100)); inEl.value = a.join(', '); run();
+    });
+    run();
+  })();
+
+  /* ---------- Bingo Simulator ---------- */
+  (function () {
+    var b = mk('demo-bingo',
+      '<div class="field"><label for="bi-in">input.txt (drawn numbers, a blank line, then 5 by 5 cards separated by blank lines)</label><textarea id="bi-in" rows="9" spellcheck="false"></textarea></div>' +
+      '<div class="row"><button class="mini" type="button" id="bi-run">Play</button><button class="mini" type="button" id="bi-new">New sample</button></div>' +
+      '<div class="out" aria-live="polite"><span class="cleaned" id="bi-head"></span><span class="verdict" style="font-size:1rem"><span id="bi-res" class="pre"></span></span></div>');
+    if (!b) return;
+    function sample() {
+      var nums = []; for (var i = 1; i <= 75; i++) nums.push(i);
+      var draws = shuffle(nums.slice()).slice(0, 50), txt = draws.join(',');
+      for (var c = 0; c < 4; c++) {
+        var pick = shuffle(nums.slice()).slice(0, 25); txt += '\n\n';
+        txt += [0, 1, 2, 3, 4].map(function (r) { return pick.slice(r * 5, r * 5 + 5).map(function (n) { return (n < 10 ? ' ' : '') + n; }).join(' '); }).join('\n');
+      }
+      return txt;
+    }
+    var inEl = document.getElementById('bi-in'), head = document.getElementById('bi-head'), res = document.getElementById('bi-res');
+    function play() {
+      var cards = [], drawn, marks;
+      try {
+        var blocks = inEl.value.trim().split(/\r?\n\s*\r?\n/);
+        drawn = blocks[0].split(',').map(function (n) { var v = parseInt(n, 10); if (isNaN(v)) throw 0; return v; });
+        blocks.slice(1).forEach(function (blk) {
+          var card = blk.trim().split(/\r?\n/).map(function (l) { return l.trim().split(/\s+/).map(function (x) { var v = parseInt(x, 10); if (isNaN(v)) throw 0; return v; }); });
+          if (card.length !== 5 || card.some(function (r) { return r.length !== 5; })) throw 0;
+          cards.push(card);
+        });
+        if (!cards.length) throw 0;
+      } catch (e) { head.textContent = ''; res.textContent = 'Check the format: first line is the drawn numbers, then 5 by 5 cards separated by blank lines.'; return; }
+      marks = cards.map(function () { return [0, 1, 2, 3, 4].map(function () { return [false, false, false, false, false]; }); });
+      function win(m) {
+        for (var i = 0; i < 5; i++) { if (m[i].every(Boolean)) return true; if (m.every(function (r) { return r[i]; })) return true; }
+        return false;
+      }
+      var winners = [];
+      drawn.forEach(function (n) {
+        cards.forEach(function (card, c) { card.forEach(function (row, i) { row.forEach(function (v, j) { if (v === n) marks[c][i][j] = true; }); }); });
+        cards.forEach(function (_, c) { if (winners.indexOf(c) < 0 && win(marks[c])) winners.push(c); });
+      });
+      head.textContent = 'Your bingo is complete. ' + winners.length + ' of ' + cards.length + ' cards won (win.txt):';
+      res.textContent = winners.length ? winners.map(function (w) {
+        return 'Card ' + (w + 1) + '\n' + cards[w].map(function (r) { return r.map(function (n) { return (n < 10 ? ' ' : '') + n; }).join(' '); }).join('\n');
+      }).join('\n\n') : 'No winners yet.';
+    }
+    inEl.value = sample(); play();
+    document.getElementById('bi-run').addEventListener('click', play);
+    document.getElementById('bi-new').addEventListener('click', function () { inEl.value = sample(); play(); });
+  })();
+
+  /* ---------- Nim ---------- */
+  (function () {
+    var b = mk('demo-nim', '<div data-r="root"></div>');
+    if (!b) return;
+    var root = b.q('[data-r=root]'), piles, player, over, msgs;
+    function setup() {
+      root.innerHTML = '<p>Three piles, two players. Take turns removing items from one pile. Whoever takes the last item loses.</p>' +
+        '<div class="row"><label>Pile 1 <input type="number" min="1" max="10" value="3" class="num" id="ni-1"></label><label>Pile 2 <input type="number" min="1" max="10" value="4" class="num" id="ni-2"></label><label>Pile 3 <input type="number" min="1" max="10" value="5" class="num" id="ni-3"></label></div>' +
+        '<div class="row"><button class="mini" type="button" id="ni-start">Start</button></div><p class="status" id="ni-err" aria-live="polite"></p>';
+      document.getElementById('ni-start').addEventListener('click', function () {
+        var p = [1, 2, 3].map(function (i) { return parseInt(document.getElementById('ni-' + i).value, 10); });
+        if (p.some(function (n) { return isNaN(n) || n < 1 || n > 10; })) { document.getElementById('ni-err').textContent = 'Select a number between 1-10 for each pile.'; return; }
+        piles = p; player = 1; over = false; msgs = ''; render();
+      });
+    }
+    function render() {
+      var html = '<div class="piles">' + piles.map(function (n, i) {
+        var d = ''; for (var k = 0; k < n; k++) d += '<span class="dot"></span>';
+        return '<div class="pile"><span class="pl">Pile ' + (i + 1) + ': ' + n + '</span><span class="dots">' + d + '</span></div>';
+      }).join('') + '</div>';
+      if (!over) {
+        html += '<p class="status">It is player ' + player + "'s turn!</p>" +
+          '<div class="row"><label>Remove <input type="number" min="1" value="1" class="num" id="ni-n"></label>' +
+          '<label>from pile <select id="ni-p"><option>1</option><option>2</option><option>3</option></select></label>' +
+          '<button class="mini" type="button" id="ni-take">Take</button></div>';
+      } else {
+        html += '<div class="row"><button class="mini" type="button" id="ni-new">New game</button></div>';
+      }
+      html += '<p class="status" aria-live="polite" style="white-space:pre-line">' + esc(msgs) + '</p>';
+      root.innerHTML = html;
+      var take = document.getElementById('ni-take');
+      if (take) take.addEventListener('click', function () {
+        var n = parseInt(document.getElementById('ni-n').value, 10), p = parseInt(document.getElementById('ni-p').value, 10) - 1;
+        if (isNaN(n)) { msgs = 'Please put in a number'; render(); return; }
+        if (n < 1) { msgs = 'You must remove at least 1 item.'; render(); return; }
+        if (n > piles[p]) { msgs = "Pick a lower number or choose from a pile that's not empty."; render(); return; }
+        piles[p] -= n; msgs = 'There are ' + piles[p] + ' left in pile ' + (p + 1) + '.';
+        if (piles.every(function (x) { return x === 0; })) { msgs += '\nPlayer ' + player + ' took the last item.\nPlayer ' + player + ' loses'; over = true; }
+        else player = player === 1 ? 2 : 1;
+        render();
+      });
+      var nw = document.getElementById('ni-new'); if (nw) nw.addEventListener('click', setup);
+    }
+    piles = [3, 4, 5]; player = 1; over = false; msgs = ''; render();
+  })();
+})();
+</script>
+
+</body>
+</html>
